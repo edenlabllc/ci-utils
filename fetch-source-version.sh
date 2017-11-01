@@ -13,9 +13,9 @@ else
 fi;
 
 # Count tag occurrences
-MAJOR_CHANGES=$(grep -i -o '\[major\]' <<< "${GIT_HISTORY}" | wc -l)
-MINOR_CHANGES=$(grep -i -o '\[minor\]' <<< "${GIT_HISTORY}" | wc -l)
-PATCH_CHANGES=$(grep -i -o '\[patch\]' <<< "${GIT_HISTORY}" | wc -l)
+MAJOR_CHANGES=$(grep -io '\[major\]' <<< "${GIT_HISTORY}" | wc -l)
+MINOR_CHANGES=$(grep -io '\[minor\]' <<< "${GIT_HISTORY}" | wc -l)
+PATCH_CHANGES=$(grep -io '\[patch\]' <<< "${GIT_HISTORY}" | wc -l)
 
 # Convert values to numbers (trims leading spaces)
 MAJOR_CHANGES=$(expr $MAJOR_CHANGES + 0)

@@ -6,11 +6,11 @@ else
 fi;
 
 GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'changelog skip')
-MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep '\[major\]')
-MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep '\[minor\]')
-PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep '\[patch\]')
+MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[major\]')
+MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[minor\]')
+PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[patch\]')
 
-OTHER_CHANGES=$(grep -vo '\[major\]' <<< "${GIT_HISTORY_CLEANED}" | grep -vo '\[minor\]' | grep -vo '\[patch\]' | wc -l)
+OTHER_CHANGES=$(grep -ivo '\[major\]' <<< "${GIT_HISTORY_CLEANED}" | grep -ivo '\[minor\]' | grep -ivo '\[patch\]' | wc -l)
 OTHER_CHANGES=$(expr $OTHER_CHANGES + 0)
 
 CHANGELOG=""
