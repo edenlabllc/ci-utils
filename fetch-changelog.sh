@@ -22,11 +22,11 @@ if [[ "${MINOR_CHANGES}" != "" ]]; then
   CHANGELOG="${CHANGELOG}**Minor changes**: "$'\n'"${MINOR_CHANGES}"$'\n\n'
 fi;
 
-if [[ "${PATCH_CHANGES}" != "0" ]]; then
+if [[ "${PATCH_CHANGES}" != "" ]]; then
   CHANGELOG="${CHANGELOG}**Patches and bug fixes**: "$'\n'"${PATCH_CHANGES}"$'\n\n'
 fi;
 
-if [[ "${OTHER_CHANGES}" != "0" ]]; then
+if [[ "${OTHER_CHANGES}" != "" ]]; then
   CHANGELOG="${CHANGELOG}"$'\n'" **${OTHER_CHANGES} other** changes."
 fi;
 
