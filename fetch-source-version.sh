@@ -7,9 +7,9 @@ CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Get release notes
 if [[ "${PREVIOUS_VERSION}" == "0.1.0" ]]; then
-  GIT_HISTORY=$(git log --no-merges --format="- %s (%an)")
+  GIT_HISTORY=$(git log --no-merges --format="%B")
 else
-  GIT_HISTORY=$(git log --no-merges --format="- %s (%an)" $PREVIOUS_VERSION..HEAD)
+  GIT_HISTORY=$(git log --no-merges --format="%B" $PREVIOUS_VERSION..HEAD)
 fi;
 
 # Count tag occurrences

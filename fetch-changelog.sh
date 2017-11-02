@@ -1,8 +1,8 @@
 # Build changelog
 if [[ $PREVIOUS_VERSION == "0.1.0" ]]; then
-  GIT_HISTORY=$(git log --no-merges --format="- %s (%an)")
+  GIT_HISTORY=$(git log --no-merges --format="%B")
 else
-  GIT_HISTORY=$(git log --no-merges --format="- %s (%an)" $PREVIOUS_VERSION..HEAD)
+  GIT_HISTORY=$(git log --no-merges --format="%B" $PREVIOUS_VERSION..HEAD)
 fi;
 
 GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'changelog skip')
