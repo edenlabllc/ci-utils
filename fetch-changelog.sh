@@ -6,9 +6,9 @@ else
 fi;
 
 GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'changelog skip' | sed 's/^* //g')
-MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[major\]' | tr -d '\[major\]')
-MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[minor\]' | tr -d '\[minor\]')
-PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[patch\]' | tr -d '\[patch\]')
+MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[major\]' | sed 's/\[major\]//Ig')
+MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[minor\]' | sed 's/\[minor\]//Ig')
+PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[patch\]' | sed 's/\[patch\]//Ig')
 
 OTHER_CHANGES=$(grep -ivo '\[major\]' <<< "${GIT_HISTORY_CLEANED}" | grep -ivo '\[minor\]' | grep -ivo '\[patch\]' | wc -l)
 OTHER_CHANGES=$(expr $OTHER_CHANGES + 0)
