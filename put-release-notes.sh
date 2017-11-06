@@ -3,7 +3,7 @@
 # Depents on env. variables set by: fetch-project-environment.sh and fetch-source-version.sh
 
 MINOR_VERSION_TEMPLATE=$(echo "${NEXT_VERSION}" | cut -d. -f1,2)'.*'
-MINOR_VERSION=$(git tag -l ${MINOR_VERSION_TEMPLATE} | head -n 1)
+MINOR_VERSION=$(git tag -l ${MINOR_VERSION_TEMPLATE} --sort=v:refname | head -n 1)
 
 RELEASE_NOTES_DIR="${PROJECT_DIR}/release_notes"
 RELEASE_NOTES_FILE="${RELEASE_NOTES_DIR}/${MINOR_VERSION}.txt"
@@ -17,9 +17,9 @@ else
 fi;
 
 GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'changelog skip' | sed 's/^* //g')
-MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[major\]' | sed 's/\[major\]//Ig')
-MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[minor\]' | sed 's/\[minor\]//Ig')
-PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[patch\]' | sed 's/\[patch\]//Ig')
+MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[major\]' | sed 's/^\[major\]//Ig')
+MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[minor\]' | sed 's/^\[minor\]//Ig')
+PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[patch\]' | sed 's/^\[patch\]//Ig')
 OTHER_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -iv '^\[major\]' | grep -iv '^\[minor\]' | grep -iv '^\[patch\]' | sed '/^$/d')
 
 echo "[I] Saving release notes into ${RELEASE_NOTES_FILE}"
