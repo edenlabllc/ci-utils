@@ -16,9 +16,10 @@ else
 fi;
 
 GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'changelog skip' | sed 's/^* //g')
-MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[major\]')
-MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[minor\]')
-PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[patch\]')
+MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[major\]' | tr -d '\[major\]')
+MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[minor\]' | tr -d '\[minor\]')
+PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '\[patch\]' | tr -d '\[patch\]')
+OTHER_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -iv '\[major\]' | grep -iv '\[minor\]' | grep -iv '\[patch\]')
 
 echo "[I] Saving release notes into ${RELEASE_NOTES_FILE}"
 # Save all changes notes to file
@@ -29,15 +30,19 @@ fi
 CHANGELOG="Change log for versions ${MINOR_VERSION} - ${NEXT_VERSION}"$'\n\n'
 
 if [[ "${MAJOR_CHANGES}" != "" ]]; then
-  CHANGELOG="${CHANGELOG}**Major changes**: "$'\n\n'"${MAJOR_CHANGES}"$'\n\n'
+  CHANGELOG="${CHANGELOG}**Major changes**:"$'\n\n'"${MAJOR_CHANGES}"$'\n\n'
 fi;
 
 if [[ "${MINOR_CHANGES}" != "" ]]; then
-  CHANGELOG="${CHANGELOG}**Minor changes**: "$'\n\n'"${MINOR_CHANGES}"$'\n\n'
+  CHANGELOG="${CHANGELOG}**Minor changes**:"$'\n\n'"${MINOR_CHANGES}"$'\n\n'
 fi;
 
 if [[ "${PATCH_CHANGES}" != "" ]]; then
-  CHANGELOG="${CHANGELOG}**Patches and bug fixes**: "$'\n\n'"${PATCH_CHANGES}"
+  CHANGELOG="${CHANGELOG}**Patches and bug fixes**:"$'\n\n'"${PATCH_CHANGES}"
+fi;
+
+if [[ "${OTHER_CHANGES}" != "" ]]; then
+  CHANGELOG="${CHANGELOG}**Other**:"$'\n\n'"${OTHER_CHANGES}"
 fi;
 
 if [[ "${CHANGELOG}" != "" ]]; then
