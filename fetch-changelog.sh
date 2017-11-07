@@ -9,8 +9,13 @@ GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'chang
 GIT_HISTORY_CLEANED=$(echo -e "${GIT_HISTORY_CLEANED}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
 
 MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[major\]' | sed 's/^\[major\]//Ig')
+MAJOR_CHANGES=$(echo -e "${MAJOR_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
+
 MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[minor\]' | sed 's/^\[minor\]//Ig')
+MINOR_CHANGES=$(echo -e "${MINOR_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
+
 PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[patch\]' | sed 's/^\[patch\]//Ig')
+PATCH_CHANGES==$(echo -e "${PATCH_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
 
 OTHER_CHANGES=$(grep -ivo '^\[major\]' <<< "${GIT_HISTORY_CLEANED}" | grep -ivo '^\[minor\]' | grep -ivo '^\[patch\]' | wc -l)
 OTHER_CHANGES=$(expr $OTHER_CHANGES + 0)

@@ -17,9 +17,15 @@ else
 fi;
 
 GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'changelog skip' | sed 's/^* //g')
+
 MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[major\]' | sed 's/^\[major\]//Ig')
+MAJOR_CHANGES=$(echo -e "${MAJOR_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
+
 MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[minor\]' | sed 's/^\[minor\]//Ig')
+MINOR_CHANGES=$(echo -e "${MINOR_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
+
 PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[patch\]' | sed 's/^\[patch\]//Ig')
+PATCH_CHANGES=$(echo -e "${PATCH_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
 
 # Remove major, minor and patch messages
 OTHER_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -iv '^\[major\]' | grep -iv '^\[minor\]' | grep -iv '^\[patch\]')
