@@ -20,7 +20,7 @@ PATCH_CHANGES=$(echo -e "${PATCH_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[
 OTHER_CHANGES=$(grep -ivo '^\[major\]' <<< "${GIT_HISTORY_CLEANED}" | grep -ivo '^\[minor\]' | grep -ivo '^\[patch\]' | wc -l)
 OTHER_CHANGES=$(expr $OTHER_CHANGES + 0)
 
-CHANGELOG="Change log"$'\n\n'
+CHANGELOG="Changelog"$'\n\n'
 if [[ "${MAJOR_CHANGES}" != "" ]]; then
   CHANGELOG="${CHANGELOG}**Major changes**: "$'\n'"${MAJOR_CHANGES}"$'\n\n'
 fi;
@@ -41,8 +41,6 @@ if [[ "${CHANGELOG}" == "" ]]; then
   CHANGELOG="${GIT_HISTORY_CLEANED}"
 fi;
 
-echo
-echo "Changelog: "
 echo -e "${CHANGELOG}"
 
 export CHANGELOG=$CHANGELOG
