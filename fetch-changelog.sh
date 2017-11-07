@@ -6,6 +6,8 @@ else
 fi;
 
 GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'changelog skip' | sed 's/^* //g')
+GIT_HISTORY_CLEANED=$(echo -e "${GIT_HISTORY_CLEANED}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') # Trim strings
+
 MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[major\]' | sed 's/^\[major\]//Ig')
 MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[minor\]' | sed 's/^\[minor\]//Ig')
 PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[patch\]' | sed 's/^\[patch\]//Ig')

@@ -20,7 +20,11 @@ GIT_HISTORY_CLEANED=$(echo "${GIT_HISTORY}" | grep -v 'ci skip' | grep -v 'chang
 MAJOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[major\]' | sed 's/^\[major\]//Ig')
 MINOR_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[minor\]' | sed 's/^\[minor\]//Ig')
 PATCH_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -i '^\[patch\]' | sed 's/^\[patch\]//Ig')
-OTHER_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -iv '^\[major\]' | grep -iv '^\[minor\]' | grep -iv '^\[patch\]' | sed '/^$/d')
+
+# Remove major, minor and patch messages
+OTHER_CHANGES=$(echo "${GIT_HISTORY_CLEANED}" | grep -iv '^\[major\]' | grep -iv '^\[minor\]' | grep -iv '^\[patch\]')
+# Trim strings and remove empty strings
+OTHER_CHANGES=$(echo -e "${OTHER_CHANGES}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | sed '/^$/d')
 
 echo "[I] Saving release notes into ${RELEASE_NOTES_FILE}"
 # Save all changes notes to file
