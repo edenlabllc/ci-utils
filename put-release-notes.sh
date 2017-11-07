@@ -3,7 +3,7 @@
 # Depents on env. variables set by: fetch-project-environment.sh and fetch-source-version.sh
 
 MINOR_VERSION_TEMPLATE=$(echo "${NEXT_VERSION}" | cut -d. -f1,2)'.*'
-MINOR_VERSION=$(git tag -l ${MINOR_VERSION_TEMPLATE} --sort=v:refname | head -n 1)
+MINOR_VERSION=$(git tag -l ${MINOR_VERSION_TEMPLATE} | sort -V | head -n 1)
 
 RELEASE_NOTES_DIR="${PROJECT_DIR}/release_notes"
 RELEASE_NOTES_FILE="${RELEASE_NOTES_DIR}/${MINOR_VERSION}.txt"
