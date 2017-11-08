@@ -53,9 +53,9 @@ echo " - There was ${MAJOR_CHANGES} major, ${MINOR_CHANGES} minor and ${PATCH_CH
 echo " - Next version will be ${NEXT_VERSION}"
 
 if [[ "${REQUIRE_VERSION_TAGS}" == "true" && "${MAJOR_CHANGES}" == "0" && "${MINOR_CHANGES}" == "0" && "${PATCH_CHANGES}" == "0" ]]; then
-  echo
-  echo "[ERROR] No version changes was detected."
-  exit 1
+  echo "[ERROR] No version changes was detected (no patch, minor or major changes)."
+  export VERSION_ERROR="[ERROR] No version changes was detected (no patch, minor or major changes)."
+  exit 0
 fi;
 
 # Do not allow to build new versions in master when release is in maintenance mode
