@@ -41,6 +41,7 @@ if [[ "${CHANGELOG}" == "" ]]; then
   CHANGELOG="${GIT_HISTORY_CLEANED}"
 fi;
 
+echo
 echo -e "${CHANGELOG}"
 
 export CHANGELOG=$CHANGELOG
