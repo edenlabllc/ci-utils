@@ -78,7 +78,7 @@ if [[ "${BUILD_REQUIRES_MAINTENANCE}" == "1" ]]; then
   if [[ "${TRAVIS_BRANCH}" == "${MAINTENANCE_BRANCH}" && ("${MAJOR_CHANGES}" != "0" || "${MINOR_CHANGES}" != "0") ]]; then
     echo
     echo "[ERROR] You can not add minors or breaking changes to the version that is in maintenance mode."
-    exit 1
+    export VERSION_ERROR="[ERROR] You can not add minors or breaking changes to the version that is in maintenance mode."
   fi;
 fi;
 
