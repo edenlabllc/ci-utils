@@ -1,5 +1,5 @@
 # Get latest version
-PREVIOUS_VERSION=$(git describe HEAD^1 --abbrev=0 --tags)
+PREVIOUS_VERSION=$(git describe HEAD --abbrev=0 --tags)
 if [[ "$?" != "0" ]]; then
   PREVIOUS_VERSION="0.1.0"
 fi;
