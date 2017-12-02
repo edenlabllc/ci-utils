@@ -26,6 +26,7 @@ docker run -p 4000:4000 -p 4001:4001 -p 4002:4002 \
        ${OPTS} ${ARGS} \
        --add-host=$HOST_NAME:$HOST_IP \
        --name ${PROJECT_NAME} \
+       -v $(pwd):/host_data \
        "${PROJECT_NAME}:${PROJECT_VERSION}"
 sleep 5
 docker ps
