@@ -1,9 +1,11 @@
 #!/bin/bash
 # This script can check if a local Docker container with created image started succesfully.
-RUNNING_CONTAINERS=$(docker ps | wc -l | tr -d '[:space:]');
+docker logs ${PROJECT_NAME} --details --since 5h;
 
-if [ $RUNNING_CONTAINERS == "1" ]; then
+IS_RUNNING=$(sudo docker inspect --format='{{ .State.Running }}' ${PROJECT_NAME});
+
+if [ $IS_RUNNING == "false" ]; then
   echo "[E] Container is not started.";
-  docker logs ${PROJECT_NAME} --details --since 5h;
   exit 1;
 fi;
+
