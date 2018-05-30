@@ -2,7 +2,7 @@
 # This script builds an image based on a Dockerfile that is located in root of git working tree.
 set -e
 
-if [[ ${TRAVIS_BRANCH} == "develop" ]]; then
+if [[ "${TRAVIS_BRANCH}" == "develop" ]]; then
     APPS_LIST=$(echo ${APPS} | jq -r '.[]')
     for i in ${APPS_LIST}
     do
