@@ -25,6 +25,14 @@ do
     esac
     done
 
+    echo "docker run -p 4000:4000"
+    echo "    --env-file .env"
+    echo "    ${OPTS} ${ARGS}"
+    echo "    --add-host=$HOST_NAME:$HOST_IP"
+    echo "    --name ${i}"
+    echo "    -v $(pwd):/host_data"
+    echo "    ${i}:develop"
+
     docker run -p 4000:4000 \
         --env-file .env \
         ${OPTS} ${ARGS} \
