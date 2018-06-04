@@ -9,7 +9,12 @@ if [ $TRAVIS_BRANCH == "develop" ]; then
     for i in ${APPS_LIST}
     do
         echo "[I] Building a Docker container '${i}' from path '${PROJECT_DIR}'..";
-        docker build --tag "${i}:develop" \
+        echo "docker build --tag \"${DOCKER_USERNAME}/${i}:develop\""
+        echo "    --file \"${PROJECT_DIR}/Dockerfile\""
+        echo "    --build-arg APP_NAME=$i"
+        echo "    \"$PROJECT_DIR\""
+
+        docker build --tag "${DOCKER_USERNAME}/${i}:develop" \
                 --file "${PROJECT_DIR}/Dockerfile" \
                 --build-arg APP_NAME=$i \
                 "$PROJECT_DIR";
