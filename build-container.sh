@@ -5,7 +5,7 @@ set -e
 echo "Current branch: ${TRAVIS_BRANCH}";
 
 if [ $TRAVIS_BRANCH == "develop" ]; then
-    APPS_LIST=$(echo ${APPS} | jq -r '.[]');
+    APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
     for i in ${APPS_LIST}
     do
         echo "[I] Building a Docker container '${i}' from path '${PROJECT_DIR}'..";

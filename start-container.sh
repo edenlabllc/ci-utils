@@ -7,7 +7,7 @@ set -e
 HOST_IP=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1`
 HOST_NAME="travis"
 
-APPS_LIST=$(echo ${APPS} | jq -r '.[]');
+APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
 for i in ${APPS_LIST}
 do
     (cd apps/${i} && MIX_ENV=dev mix ecto.setup)

@@ -11,7 +11,7 @@ if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "develop" ]];
         exit 1
     fi
 
-    APPS_LIST=$(echo ${APPS} | jq -r '.[]');
+    APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
     for i in ${APPS_LIST}
     do
         echo "[I] Pushing changes to Docker Hub.."
