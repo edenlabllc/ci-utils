@@ -51,4 +51,6 @@ do
     echo "[E] Container is not started.";
     exit 1;
     fi;
+
+    docker stop ${i}
 done
