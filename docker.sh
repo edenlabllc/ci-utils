@@ -2,6 +2,12 @@
 
 set -e
 
+export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
+
+curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella/init-db.sh -o init-db.sh
+chmod 700 ./init-db.sh
+sudo ./init-db.sh
+
 curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella/build-container.sh -o build-container.sh
 chmod 700 ./build-container.sh
 ./build-container.sh
