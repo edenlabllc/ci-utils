@@ -46,7 +46,7 @@ do
         --add-host=$HOST_NAME:$HOST_IP \
         --name ${i} \
         -v $(pwd):/host_data \
-        "${DOCKER_USERNAME}/${i}:develop"
+        "${DOCKER_NAMESPACE}/${i}:develop"
     sleep 5
     docker ps
 
