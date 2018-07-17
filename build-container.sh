@@ -8,12 +8,12 @@ APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
 for i in ${APPS_LIST}
 do
     echo "[I] Building a Docker container '${i}' from path '${PROJECT_DIR}'..";
-    echo "docker build --tag \"${DOCKER_USERNAME}/${i}:develop\""
+    echo "docker build --tag \"${DOCKER_NAMESPACE}/${i}:develop\""
     echo "    --file \"${PROJECT_DIR}/Dockerfile\""
     echo "    --build-arg APP_NAME=$i"
     echo "    \"$PROJECT_DIR\""
 
-    docker build --tag "${DOCKER_USERNAME}/${i}:develop" \
+    docker build --tag "${DOCKER_NAMESPACE}/${i}:develop" \
             --file "${PROJECT_DIR}/Dockerfile" \
             --build-arg APP_NAME=$i \
             "$PROJECT_DIR";
