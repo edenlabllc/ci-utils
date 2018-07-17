@@ -23,6 +23,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         for chart in ${APPS_LIST}
         do
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
+            helm upgrade -f $chart/values-dev.yaml $chart $chart
             $TRAVIS_BUILD_DIR/wait-for-deployment.sh api $chart 180
                 if [ "$?" -eq 0 ]; then
                     kubectl get pod -n $chart | grep api
