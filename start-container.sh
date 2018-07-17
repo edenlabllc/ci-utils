@@ -11,8 +11,10 @@ APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
 for i in ${APPS_LIST}
 do
     if [ -d "apps/${i}" ]; then
+        echo "(cd apps/${i} && MIX_ENV=dev mix ecto.setup)"
         (cd apps/${i} && MIX_ENV=dev mix ecto.setup)
     else
+        echo "MIX_ENV=dev mix ecto.setup"
         MIX_ENV=dev mix ecto.setup
     fi
 
