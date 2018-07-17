@@ -3,9 +3,9 @@
 cd $TRAVIS_BUILD_DIR
 
 # Run all tests except pending ones
+is_failed=0;
 echo "- mix test --exclude pending --trace "
 mix test --exclude pending --trace
-is_failed=0;
 
 if [ "$?" -eq 0 ]; then
   echo "mix test successfully completed"
