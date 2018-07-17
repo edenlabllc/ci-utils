@@ -48,7 +48,7 @@ do
         -v $(pwd):/host_data \
         "${DOCKER_NAMESPACE}/${i}:develop"
     sleep 5
-    docker ps
+    docker ps --all
 
     docker logs ${i} --details --since 5h;
 
