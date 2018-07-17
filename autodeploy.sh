@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ls -la $TRAVIS_BUILD_DIR
+
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     if [ "$TRAVIS_BRANCH" == "develop" ]; then
         curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella/wait-for-deployment.sh -o wait-for-deployment.sh
