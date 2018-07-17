@@ -10,7 +10,12 @@ HOST_NAME="travis"
 APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
 for i in ${APPS_LIST}
 do
-    (cd apps/${i} && MIX_ENV=dev mix ecto.setup)
+    if [ -d "apps/${i}" ]; then
+        (cd apps/${i} && MIX_ENV=dev mix ecto.setup)
+    else
+        MIX_ENV=dev mix ecto.setup
+    fi
+
     echo "[I] Starting a Docker container '${i}' from path '${PROJECT_DIR}' and"
     echo "    adding parent host '${HOST_NAME}' with IP '${HOST_IP}'."
 
