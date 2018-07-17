@@ -15,7 +15,7 @@ if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "develop" ]];
     for i in ${APPS_LIST}
     do
         echo "[I] Pushing changes to Docker Hub.."
-        echo "docker push \"${DOCKER_USERNAME}/${i}:develop\""
-        docker push "${DOCKER_USERNAME}/${i}:develop"
+        echo "docker push \"${DOCKER_NAMESPACE}/${i}:develop\""
+        docker push "${DOCKER_NAMESPACE}/${i}:develop"
     done
 fi;

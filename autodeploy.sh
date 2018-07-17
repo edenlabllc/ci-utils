@@ -13,7 +13,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
         chmod 700 get_helm.sh
         ./get_helm.sh
-        Credentials to GCE
+        # Credentials to GCE
         gcloud auth activate-service-account --key-file=$TRAVIS_BUILD_DIR/eHealth-8110bd102a69.json
         gcloud container clusters get-credentials dev --zone europe-west1-d --project ehealth-162117
         #get helm charts
