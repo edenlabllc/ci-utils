@@ -24,6 +24,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         do
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
             helm upgrade -f $chart/values-dev.yaml $chart $chart
+            kubectl delete pod -l app=api -n $chart
             $TRAVIS_BUILD_DIR/wait-for-deployment.sh api $chart 180
                 if [ "$?" -eq 0 ]; then
                     kubectl get pod -n $chart | grep api
