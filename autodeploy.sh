@@ -1,7 +1,5 @@
 #!/bin/bash
 
-ls -la $TRAVIS_BUILD_DIR
-
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     if [ "$TRAVIS_BRANCH" == "develop" ]; then
         curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella/wait-for-deployment.sh -o wait-for-deployment.sh
@@ -25,7 +23,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         for chart in ${APPS_LIST}
         do
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
-            ./wait-for-deployment.sh api $chart 180
+            $TRAVIS_BUILD_DIR/wait-for-deployment.sh api $chart 180
                 if [ "$?" -eq 0 ]; then
                     kubectl get pod -n $chart | grep api
                     exit 0;
