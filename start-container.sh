@@ -10,12 +10,14 @@ HOST_NAME="travis"
 APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
 for i in ${APPS_LIST}
 do
-    if [ -d "apps/${i}" ]; then
-        echo "(cd apps/${i} && MIX_ENV=dev mix ecto.setup)"
-        (cd apps/${i} && MIX_ENV=dev mix ecto.setup)
-    else
-        echo "MIX_ENV=dev mix ecto.setup"
-        MIX_ENV=dev mix ecto.setup
+    if [ -z "$NO_ECTO_SETUP" ]; then
+        if [ -d "apps/${i}" ]; then
+            echo "(cd apps/${i} && MIX_ENV=dev mix ecto.setup)"
+            (cd apps/${i} && MIX_ENV=dev mix ecto.setup)
+        else
+            echo "MIX_ENV=dev mix ecto.setup"
+            MIX_ENV=dev mix ecto.setup
+        fi
     fi
 
     echo "[I] Starting a Docker container '${i}' from path '${PROJECT_DIR}' and"
