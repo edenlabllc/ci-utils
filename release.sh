@@ -9,4 +9,11 @@ echo "[I] Pushing changes to Docker Hub.."
 echo "docker push \"${DOCKER_NAMESPACE}/${APP}:${VERSION}\""
 docker push "${DOCKER_NAMESPACE}/${APP}:${VERSION}"
 
+echo "[I] Creating git tag.."
+echo "git tag ${VERSION}"
+git tag ${VERSION}
+
+echo "[I] Pushing tag.."
+git push ${VERSION}
+
 echo
