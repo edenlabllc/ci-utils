@@ -14,6 +14,6 @@ echo "git tag ${VERSION}"
 git tag ${VERSION}
 
 echo "[I] Pushing tag.."
-git push ${VERSION}
+git push origin ${VERSION}
 
 echo
