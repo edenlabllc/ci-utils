@@ -34,6 +34,10 @@ do
     esac
     done
 
+    if [ ! -z "${NETWORK}" ]; then
+        ARGS="--network=${NETWORK}"
+    fi
+
     echo "docker run -p 4000:4000"
     echo "    --env-file .env"
     echo "    ${OPTS} ${ARGS}"
