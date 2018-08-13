@@ -35,7 +35,15 @@ do
     done
 
     if [ ! -z "${NETWORK}" ]; then
-        ARGS="--network=${NETWORK}"
+        ARGS="${ARGS} --network=${NETWORK}"
+    fi
+
+    if [ ! -z "${DOCKER_HOSTS}" ]; then
+        HOSTS_LIST=$(echo ${DOCKER_HOSTS} | jq -r '.[]');
+        for j in ${HOSTS_LIST}
+        do
+            ARGS="${ARGS} --add-host=${j}"
+        done
     fi
 
     echo "docker run -p 4000:4000"
