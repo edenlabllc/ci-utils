@@ -7,20 +7,20 @@ set -e
 HOST_IP=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1`
 HOST_NAME="travis"
 
-APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
-for i in ${APPS_LIST}
+APPS_LIST=$(echo ${APPS} | jq -r '.[].app');
+for app in ${APPS_LIST}
 do
     if [ -z "$NO_ECTO_SETUP" ]; then
-        if [ -d "apps/${i}" ]; then
-            echo "(cd apps/${i} && MIX_ENV=dev mix ecto.setup)"
-            (cd apps/${i} && MIX_ENV=dev mix ecto.setup)
+        if [ -d "apps/${app}" ]; then
+            echo "(cd apps/${app} && MIX_ENV=dev mix ecto.setup)"
+            (cd apps/${app} && MIX_ENV=dev mix ecto.setup)
         else
             echo "MIX_ENV=dev mix ecto.setup"
             MIX_ENV=dev mix ecto.setup
         fi
     fi
 
-    echo "[I] Starting a Docker container '${i}' from path '${PROJECT_DIR}' and"
+    echo "[I] Starting a Docker container for '${app}' application and"
     echo "    adding parent host '${HOST_NAME}' with IP '${HOST_IP}'."
 
     # Allow to pass -i option to start container in interactive mode
@@ -50,29 +50,29 @@ do
     echo "    --env-file .env"
     echo "    ${OPTS} ${ARGS}"
     echo "    --add-host=$HOST_NAME:$HOST_IP"
-    echo "    --name ${i}"
+    echo "    --name ${app}"
     echo "    -v $(pwd):/host_data"
-    echo "    ${i}:develop"
+    echo "    $app:develop"
 
     docker run -p 4000:4000 \
         --env-file .env \
         ${OPTS} ${ARGS} \
         --add-host=$HOST_NAME:$HOST_IP \
-        --name ${i} \
+        --name ${app} \
         -v $(pwd):/host_data \
-        "${DOCKER_NAMESPACE}/${i}:develop"
+        "${DOCKER_NAMESPACE}/$app:develop"
     sleep 5
     docker network ls
     docker ps --all
 
-    docker logs ${i} --details --since 5h;
+    docker logs ${app} --details --since 5h;
 
-    IS_RUNNING=$(docker inspect --format='{{ .State.Running }}' ${i});
+    IS_RUNNING=$(docker inspect --format='{{ .State.Running }}' ${app});
 
     if [ -z "$IS_RUNNING" ] || [ $IS_RUNNING != "true" ]; then
     echo "[E] Container is not started.";
     exit 1;
     fi;
 
-    docker stop ${i}
+    docker stop ${app}
 done

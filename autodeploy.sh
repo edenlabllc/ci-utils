@@ -2,7 +2,7 @@
 
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     if [ "$TRAVIS_BRANCH" == "develop" ]; then
-        curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella/wait-for-deployment.sh -o wait-for-deployment.sh
+        curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/wait-for-deployment.sh -o wait-for-deployment.sh
         chmod 700 ./wait-for-deployment.sh
 
         # install kubectl
@@ -19,21 +19,27 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         #get helm charts
         git clone https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.charts.git
         cd ehealth.charts
-        APPS_LIST=$(echo ${APPS} | jq -r '.[]');
+
+        i=0
+        APPS_LIST=$(echo ${APPS} | jq -r '.[].chart');
         for chart in ${APPS_LIST}
         do
+            namespace=$(echo ${APPS} | jq -r ".[$i].namespace");
+            deployment=$(echo ${APPS} | jq -r ".[$i].deployment");
+            label=$(echo ${APPS} | jq -r ".[$i].label");
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
             helm upgrade -f $chart/values-dev.yaml $chart $chart
-            kubectl delete pod -l app=api -n $chart
-            $TRAVIS_BUILD_DIR/wait-for-deployment.sh api $chart 180
+            kubectl delete pod -l app=$label -n $namespace
+            $TRAVIS_BUILD_DIR/wait-for-deployment.sh $deployment $namespace 180
                 if [ "$?" -eq 0 ]; then
-                    kubectl get pod -n $chart | grep api
-                    exit 0;
+                    kubectl get pod -l app=$label -n $namespace
                 else
-                    kubectl logs $(sudo kubectl get pod -n $chart | awk '{ print $1 }' | grep api) -n $chart
+                    kubectl logs $(sudo kubectl get pod -l app=$label -n $namespace | sed -n 2p | awk '{ print $1 }') -n $namespace
                     exit 1;
                 fi;
+            i=$i+1
         done
+        exit 0;
 
     fi;
 fi;

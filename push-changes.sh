@@ -11,11 +11,11 @@ if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "develop" ]];
         exit 1
     fi
 
-    APPS_LIST=$(echo ${APPS} | jq -r 'keys[]');
-    for i in ${APPS_LIST}
+    APPS_LIST=$(echo ${APPS} | jq -r '.[].app');
+    for app in ${APPS_LIST}
     do
         echo "[I] Pushing changes to Docker Hub.."
-        echo "docker push \"${DOCKER_NAMESPACE}/${i}:develop\""
-        docker push "${DOCKER_NAMESPACE}/${i}:develop"
+        echo "docker push \"${DOCKER_NAMESPACE}/${app}:develop\""
+        docker push "${DOCKER_NAMESPACE}/${app}:develop"
     done
 fi;
