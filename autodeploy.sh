@@ -29,6 +29,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
             label=$(echo ${APPS} | jq -r ".[$i].label");
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
             helm upgrade -f $chart/values-dev.yaml $chart $chart
+            echo "kubectl delete pod -l app=$label -n $namespace"
             kubectl delete pod -l app=$label -n $namespace
             $TRAVIS_BUILD_DIR/wait-for-deployment.sh $deployment $namespace 180
                 if [ "$?" -eq 0 ]; then
