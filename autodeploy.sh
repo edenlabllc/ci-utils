@@ -30,7 +30,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
             helm upgrade -f $chart/values-dev.yaml $chart $chart
 
-            if [ -n "$label" ]; then 
+            if [ "$label" != "null" ]; then 
                 echo "kubectl delete pod -l app=$label -n $namespace"
                 kubectl delete pod -l app=$label -n $namespace
                 $TRAVIS_BUILD_DIR/wait-for-deployment.sh $deployment $namespace 180
