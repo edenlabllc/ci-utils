@@ -29,15 +29,18 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
             label=$(echo ${APPS} | jq -r ".[$i].label");
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
             helm upgrade -f $chart/values-dev.yaml $chart $chart
-            echo "kubectl delete pod -l app=$label -n $namespace"
-            kubectl delete pod -l app=$label -n $namespace
-            $TRAVIS_BUILD_DIR/wait-for-deployment.sh $deployment $namespace 180
-                if [ "$?" -eq 0 ]; then
-                    kubectl get pod -l app=$label -n $namespace
-                else
-                    kubectl logs $(sudo kubectl get pod -l app=$label -n $namespace | sed -n 2p | awk '{ print $1 }') -n $namespace
-                    exit 1;
-                fi;
+
+            if [ -n "$label" ]; then 
+                echo "kubectl delete pod -l app=$label -n $namespace"
+                kubectl delete pod -l app=$label -n $namespace
+                $TRAVIS_BUILD_DIR/wait-for-deployment.sh $deployment $namespace 180
+                    if [ "$?" -eq 0 ]; then
+                        kubectl get pod -l app=$label -n $namespace
+                    else
+                        kubectl logs $(sudo kubectl get pod -l app=$label -n $namespace | sed -n 2p | awk '{ print $1 }') -n $namespace
+                        exit 1;
+                    fi;
+            fi
             i=$i+1
         done
         exit 0;
