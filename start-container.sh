@@ -7,6 +7,7 @@ set -e
 HOST_IP=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1`
 HOST_NAME="travis"
 
+i=0
 APPS_LIST=$(echo ${APPS} | jq -r '.[].app');
 for app in ${APPS_LIST}
 do
@@ -46,33 +47,38 @@ do
         done
     fi
 
-    echo "docker run -p 4000:4000"
-    echo "    --env-file .env"
-    echo "    ${OPTS} ${ARGS}"
-    echo "    --add-host=$HOST_NAME:$HOST_IP"
-    echo "    --name ${app}"
-    echo "    -v $(pwd):/host_data"
-    echo "    $app:develop"
+    job=$(echo ${APPS} | jq -r ".[$i].job");
+    if [ "$job" != "true" ]; then
+        echo "docker run -p 4000:4000"
+        echo "    --env-file .env"
+        echo "    ${OPTS} ${ARGS}"
+        echo "    --add-host=$HOST_NAME:$HOST_IP"
+        echo "    --name ${app}"
+        echo "    -v $(pwd):/host_data"
+        echo "    $app:develop"
 
-    docker run -p 4000:4000 \
-        --env-file .env \
-        ${OPTS} ${ARGS} \
-        --add-host=$HOST_NAME:$HOST_IP \
-        --name ${app} \
-        -v $(pwd):/host_data \
-        "${DOCKER_NAMESPACE}/$app:develop"
-    sleep 5
-    docker network ls
-    docker ps --all
+        docker run -p 4000:4000 \
+            --env-file .env \
+            ${OPTS} ${ARGS} \
+            --add-host=$HOST_NAME:$HOST_IP \
+            --name ${app} \
+            -v $(pwd):/host_data \
+            "${DOCKER_NAMESPACE}/$app:develop"
+        sleep 5
+        docker network ls
+        docker ps --all
 
-    docker logs ${app} --details --since 5h;
+        docker logs ${app} --details --since 5h;
 
-    IS_RUNNING=$(docker inspect --format='{{ .State.Running }}' ${app});
+        IS_RUNNING=$(docker inspect --format='{{ .State.Running }}' ${app});
 
-    if [ -z "$IS_RUNNING" ] || [ $IS_RUNNING != "true" ]; then
-    echo "[E] Container is not started.";
-    exit 1;
-    fi;
+        if [ -z "$IS_RUNNING" ] || [ $IS_RUNNING != "true" ]; then
+        echo "[E] Container is not started.";
+        exit 1;
+        fi;
 
-    docker stop ${app}
+        docker stop ${app}
+    fi
+
+    i=$i+1
 done
