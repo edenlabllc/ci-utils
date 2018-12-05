@@ -4,18 +4,19 @@ set -e
 
 echo "Current branch: ${TRAVIS_BRANCH}";
 
-APPS_LIST=$(echo ${APPS} | jq -r '.[].app');
-for app in ${APPS_LIST}
-do
-    echo "[I] Building a Docker container for '$app' application";
-    echo "docker build --tag \"${DOCKER_NAMESPACE}/$app:develop\""
-    echo "    --file \"${PROJECT_DIR}/Dockerfile\""
-    echo "    --build-arg APP_NAME=$app"
-    echo "    \"$PROJECT_DIR\""
+for row in $(echo "${APPS}" | jq -c '.[]'); do
+    APP_NAME=$(echo "${row}" | jq -r '.app')
+    DOCKERFILE=$(echo "${row}" | jq -r 'if .dockerfile then .dockerfile else "Dockerfile" end')
 
-    docker build --tag "${DOCKER_NAMESPACE}/$app:develop" \
-            --file "${PROJECT_DIR}/Dockerfile" \
-            --build-arg APP_NAME=$app \
+    echo "[I] Building a Docker container for '$APP_NAME' application";
+    echo "docker build --tag \"${DOCKER_NAMESPACE}/$APP_NAME:develop\""
+    echo "    --file \"${PROJECT_DIR}/${DOCKERFILE}\""
+    echo "    --build-arg APP_NAME=$APP_NAME"
+    echo "    \"$PROJECT_DIR\""
+    
+     docker build --tag "${DOCKER_NAMESPACE}/$APP_NAME:develop" \
+            --file "${PROJECT_DIR}/${DOCKERFILE}" \
+            --build-arg APP_NAME=$APP_NAME \
             "$PROJECT_DIR";
 
     echo
