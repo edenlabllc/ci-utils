@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};

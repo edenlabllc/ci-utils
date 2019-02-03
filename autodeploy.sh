@@ -1,7 +1,8 @@
 #!/bin/bash
+export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
 
-if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    if [ "$TRAVIS_BRANCH" == "develop" ]; then
+if [ - z "$CHANGE_ID" == "true" ]; then
+    if [ "$GIT_BRANCH" == "develop" ]; then
         curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/wait-for-deployment.sh -o wait-for-deployment.sh
         chmod 700 ./wait-for-deployment.sh
 

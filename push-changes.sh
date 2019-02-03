@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/bin/bash\
 
 set -e
 
-if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "develop" ]]; then
+export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
+
+if [[  -z "${CHANGE_ID}" == "true" && "${GIT_BRANCH}" == "develop" ]]; then
     echo "Logging in into Docker Hub";
     echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 

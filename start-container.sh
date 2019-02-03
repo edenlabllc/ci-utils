@@ -1,7 +1,10 @@
 #!/bin/bash
 # This script starts a local Docker container with created image.
 # Use `-i` to start it in interactive mode (foreground console and auto-remove on exit).
+
 set -e
+
+export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
 
 # Get container host address
 HOST_IP=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1`
