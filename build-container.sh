@@ -5,7 +5,7 @@ export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
 # This script builds an image based on a Dockerfile that is located in root of git working tree.
 set -e
 
-echo "Current branch: ${TRAVIS_BRANCH}";
+echo "Current branch: ${GIT_BRANCH}";
 
 for row in $(echo "${APPS}" | jq -c '.[]'); do
     APP_NAME=$(echo "${row}" | jq -r '.app')

@@ -4,7 +4,7 @@ set -e
 
 export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
 
-if [[  -z "${CHANGE_ID}" == "true" && "${GIT_BRANCH}" == "develop" ]]; then
+if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
     echo "Logging in into Docker Hub";
     echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 
@@ -20,4 +20,7 @@ if [[  -z "${CHANGE_ID}" == "true" && "${GIT_BRANCH}" == "develop" ]]; then
         echo "docker push \"${DOCKER_NAMESPACE}/${app}:develop\""
         docker push "${DOCKER_NAMESPACE}/${app}:develop"
     done
+    else
+      echo "not a develop branch"
+      exit 1
 fi;

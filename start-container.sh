@@ -7,8 +7,8 @@ set -e
 export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
 
 # Get container host address
-HOST_IP=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1`
-HOST_NAME="travis"
+# HOST_IP=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1`
+# HOST_NAME="travis"
 
 i=0
 APPS_LIST=$(echo ${APPS} | jq -r '.[].app');
@@ -17,10 +17,10 @@ do
     if [ -z "$NO_ECTO_SETUP" ]; then
         if [ -d "apps/${app}" ]; then
             echo "(cd apps/${app} && MIX_ENV=dev mix ecto.setup)"
-            (cd apps/${app} && MIX_ENV=dev mix ecto.setup)
+            (cd apps/${app} && MIX_ENV="dev mix ecto.setup")
         else
             echo "MIX_ENV=dev mix ecto.setup"
-            MIX_ENV=dev mix ecto.setup
+            MIX_ENV="dev mix ecto.setup"
         fi
     fi
 
@@ -63,7 +63,6 @@ do
         docker run -p 4000:4000 \
             --env-file .env \
             ${OPTS} ${ARGS} \
-            --add-host=$HOST_NAME:$HOST_IP \
             --name ${app} \
             -v $(pwd):/host_data \
             "${DOCKER_NAMESPACE}/$app:develop"
