@@ -17,10 +17,10 @@ do
     if [ -z "$NO_ECTO_SETUP" ]; then
         if [ -d "apps/${app}" ]; then
             echo "(cd apps/${app} && MIX_ENV=dev mix ecto.setup)"
-            (cd apps/${app} && MIX_ENV="dev mix ecto.setup")
+            (cd apps/${app} && MIX_ENV=dev mix ecto.setup)
         else
             echo "MIX_ENV=dev mix ecto.setup"
-            MIX_ENV="dev mix ecto.setup"
+            MIX_ENV=dev mix ecto.setup
         fi
     fi
 
