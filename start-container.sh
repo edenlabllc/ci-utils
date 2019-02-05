@@ -28,7 +28,7 @@ do
     echo "    adding parent host '${HOST_NAME}' with IP '${HOST_IP}'."
 
     # Allow to pass -i option to start container in interactive mode
-    OPTS="-d"
+    OPTS="-dt"
     ARGS=""
     while getopts "ia:" opt; do
     case "$opt" in
@@ -55,7 +55,6 @@ do
         echo "docker run -p 4000:4000"
         echo "    --env-file .env"
         echo "    ${OPTS} ${ARGS}"
-        echo "    --add-host=$HOST_NAME:$HOST_IP"
         echo "    --name ${app}"
         echo "    -v $(pwd):/host_data"
         echo "    $app:develop"
