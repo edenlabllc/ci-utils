@@ -22,5 +22,4 @@ if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
     done
     else
       echo "not a develop branch"
-      exit 1
 fi;
