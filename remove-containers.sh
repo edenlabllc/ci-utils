@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APPS_LIST=$(echo ${APPS} | jq -r \'.[].app\');
+APPS_LIST=$(echo ${APPS} | jq -r '.[].app');
 for app in ${APPS_LIST}
 do
     echo "[I] Removing docker container and image"
