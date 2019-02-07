@@ -2,8 +2,6 @@
 
 set -e
 
-export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
-
 if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
     echo "Logging in into Docker Hub";
     echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin

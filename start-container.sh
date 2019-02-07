@@ -4,8 +4,6 @@
 
 set -e
 
-export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
-
 # Get container host address
 HOST_IP="127.0.0.1"
 HOST_NAME="travis"

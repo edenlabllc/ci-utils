@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
+export PROJECT_DIR=${WORKSPACE};
 
 # This script builds an image based on a Dockerfile that is located in root of git working tree.
 set -e
