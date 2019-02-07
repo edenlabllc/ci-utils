@@ -30,6 +30,8 @@ if [ - z "$CHANGE_ID" ]; then
             i=$i+1
         done
         exit 0;
-
+    else
+    echo 'Not a develop branch'
     fi;
+else echo "it's a PR" 
 fi;
