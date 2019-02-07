@@ -1,7 +1,7 @@
 #!/bin/bash
 export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
 
-if [ - z "$CHANGE_ID" ]; then
+if [ -z "$CHANGE_ID" ]; then
     if [ "$GIT_BRANCH" == "develop" ]; then
         curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins/wait-for-deployment.sh -o wait-for-deployment.sh
         chmod 700 ./wait-for-deployment.sh
