@@ -15,8 +15,12 @@ if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
     for app in ${APPS_LIST}
     do
         echo "[I] Pushing changes to Docker Hub.."
+        echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:develop\""
         echo "docker push \"${DOCKER_NAMESPACE}/${app}:develop\""
+        echo "docker rmi \"${DOCKER_NAMESPACE}/${app}:develop\""
+        docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:develop"
         docker push "${DOCKER_NAMESPACE}/${app}:develop"
+        docker rmi "${DOCKER_NAMESPACE}/${app}:develop"
     done
     else
       echo "not a develop branch"

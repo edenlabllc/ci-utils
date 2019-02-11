@@ -56,7 +56,7 @@ do
         echo "    --add-host=$HOST_NAME:$HOST_IP"
         echo "    --name ${app}"
         echo "    -v $(pwd):/host_data"
-        echo "    $app:develop"
+        echo "    $app:$GIT_COMMIT"
 
         docker run -p 4000:4000 \
             --env-file .env \
@@ -64,7 +64,7 @@ do
             --add-host=$HOST_NAME:$HOST_IP \
             --name ${app} \
             -v $(pwd):/host_data \
-            "${DOCKER_NAMESPACE}/$app:develop"
+            "${DOCKER_NAMESPACE}/$app:$GIT_COMMIT"
         sleep 5
         docker network ls
         docker ps --all

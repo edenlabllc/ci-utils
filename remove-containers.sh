@@ -5,7 +5,7 @@ for app in ${APPS_LIST}
 do
     echo "[I] Removing docker container and image"
     echo "docker rm  "${app}""
-    echo "docker rmi  "${DOCKER_NAMESPACE}/${app}:develop""
+    echo "docker rmi \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\""
     docker rm  "${app}"
-    docker rmi  "${DOCKER_NAMESPACE}/${app}:develop"
+    docker rmi "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT"
 done
