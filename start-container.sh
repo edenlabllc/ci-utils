@@ -50,7 +50,7 @@ do
 
     job=$(echo ${APPS} | jq -r ".[$i].job");
     if [ "$job" != "true" ]; then
-        echo "docker run -p 4000:4000"
+        echo "docker run"
         echo "    --env-file .env"
         echo "    ${OPTS} ${ARGS}"
         echo "    --add-host=$HOST_NAME:$HOST_IP"
@@ -58,7 +58,7 @@ do
         echo "    -v $(pwd):/host_data"
         echo "    $app:$GIT_COMMIT"
 
-        docker run -p 4000:4000 \
+        docker run \
             --env-file .env \
             ${OPTS} ${ARGS} \
             --add-host=$HOST_NAME:$HOST_IP \
