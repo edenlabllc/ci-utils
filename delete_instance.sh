@@ -4,8 +4,8 @@ until gcloud container node-pools delete ehealth-build-${BUILD_NUMBER} --zone=eu
 do
     sleep 25
     echo "there are no file ff" 
-    if echo "$?" | grep -q "ERROR: (gcloud.container.node-pools.delete) ResponseError: code=404"; then
-        echo "We found error ERROR: (gcloud.container.node-pools.delete) ResponseError: code=404"
+    if echo "$?" | grep -q "Not found"; then
+        echo "We found error ERROR: (gcloud.container.node-pools.delete) ResponseError: code=404, message=Not found: node pool"
         break
     fi  
 done
