@@ -1,6 +1,7 @@
 #!/bin/bash
 set -x
 echo "------start script-----"
+GIT_COMMIT=$(git rev-parse HEAD)
 EX=0
 until [ $EX -eq 1 ]
 do
