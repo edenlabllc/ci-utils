@@ -6,7 +6,7 @@ GIT_COMMIT=$(git rev-parse HEAD)
 EX=0
 until [ $EX -eq 1 ]
 do
-    if gcloud container node-pools delete $PROJECT_NAME-$BUILD_ID-${RD:0:10} --zone=europe-west1-d --cluster=dev --quiet 2>&1 | grep -q "Not found"; then
+    if gcloud container node-pools delete $PROJECT_NAME-$BUILD_ID-${RD:0:14} --zone=europe-west1-d --cluster=dev --quiet 2>&1 | grep -q "Not found"; then
         sleep 4
         echo "Instance not found"
         EX=1
