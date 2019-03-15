@@ -6,12 +6,20 @@ GIT_COMMIT=$(git rev-parse HEAD)
 EX=0
 until [ $EX -eq 1 ]
 do
-    if gcloud container node-pools delete $PROJECT_NAME --zone=europe-west1-d --cluster=dev --quiet 2>&1 | grep -q "Not found"; then
+    if kubectl get pod -n jenkins  -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 2>&1 | grep gke-dev-uaddresses  | grep "Running"; then
         sleep 4
-        echo "Instance not found"
+        echo "Pods found"
         EX=1
     else
         sleep 4
         EX=0
+        if gcloud container node-pools delete $PROJECT_NAME --zone=europe-west1-d --cluster=dev --quiet 2>&1 | grep -q "Not found"; then
+            sleep 4
+            echo "Instance not found"
+            EX=1
+        else
+            sleep 4
+            EX=0
+        fi
     fi
 done
