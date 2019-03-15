@@ -8,7 +8,6 @@ until [ $EX -eq 1 ]
 do
     if gcloud container node-pools delete $PROJECT_NAME-$BUILD_ID-$RD_CROP --zone=europe-west1-d --cluster=dev --quiet 2>&1 | grep -q "Not found"; then
         sleep 4
-        curl -s https://github.com/edenlabllc/ci-utils/blob/umbrella_jenkins_new/good.sh -o good.sh; bash ./good.sh
         echo "Instance not found"
         EX=1
     else
