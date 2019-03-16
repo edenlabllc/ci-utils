@@ -6,7 +6,7 @@ GIT_COMMIT=$(git rev-parse HEAD)
 EX=0
 until [ $EX -eq 1 ]
 do
-    if kubectl get pod -n jenkins  -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 2>&1 | grep gke-dev-uaddresses  | grep "Running"; then
+    if kubectl get pod -n jenkins  -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 2>&1 | grep gke-dev-$PROJECT_NAME  | grep "Running"; then
         sleep 4
         echo "Pods found"
         EX=1
