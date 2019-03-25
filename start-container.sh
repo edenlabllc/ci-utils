@@ -71,7 +71,7 @@ do
 
         sudo docker logs ${app} --details --since 5h;
 
-        IS_RUNNING=$(docker inspect --format='{{ .State.Running }}' ${app});
+        IS_RUNNING=$(sudo docker inspect --format='{{ .State.Running }}' ${app});
 
         if [ -z "$IS_RUNNING" ] || [ $IS_RUNNING != "true" ]; then
         echo "[E] Container is not started.";
