@@ -5,7 +5,7 @@
 set -e
 
 # Get container host address
-HOST_IP="127.0.0.1"
+HOST_IP=`ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n 1`
 HOST_NAME="travis"
 
 i=0
