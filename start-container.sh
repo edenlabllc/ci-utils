@@ -58,7 +58,7 @@ do
         echo "    -v $(pwd):/host_data"
         echo "    $app:$GIT_COMMIT"
 
-        docker run \
+        sudo docker run \
             --env-file .env \
             ${OPTS} ${ARGS} \
             --add-host=$HOST_NAME:$HOST_IP \
@@ -66,10 +66,10 @@ do
             -v $(pwd):/host_data \
             "${DOCKER_NAMESPACE}/$app:$GIT_COMMIT"
         sleep 5
-        docker network ls
-        docker ps --all
+        sudo docker network ls
+        sudo docker ps --all
 
-        docker logs ${app} --details --since 5h;
+        sudo docker logs ${app} --details --since 5h;
 
         IS_RUNNING=$(docker inspect --format='{{ .State.Running }}' ${app});
 
@@ -78,7 +78,7 @@ do
         exit 1;
         fi;
 
-        docker stop ${app}
+        sudo docker stop ${app}
     fi
 
     i=$i+1

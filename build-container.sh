@@ -17,7 +17,7 @@ for row in $(echo "${APPS}" | jq -c '.[]'); do
     echo "    --build-arg APP_NAME=$APP_NAME"
     echo "    \"$PROJECT_DIR\""
     
-     docker build --tag "${DOCKER_NAMESPACE}/$APP_NAME:$GIT_COMMIT" \
+     sudo docker build --tag "${DOCKER_NAMESPACE}/$APP_NAME:$GIT_COMMIT" \
             --file "${PROJECT_DIR}/${DOCKERFILE}" \
             --build-arg APP_NAME=$APP_NAME \
             "$PROJECT_DIR";
