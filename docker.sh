@@ -15,6 +15,6 @@ curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/push-c
 chmod 700 ./push-changes.sh
 ./push-changes.sh
 
-curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/autodeploy.sh -o autodeploy.sh
-chmod 700 ./autodeploy.sh
-./autodeploy.sh
+# curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/autodeploy.sh -o autodeploy.sh
+# chmod 700 ./autodeploy.sh
+# ./autodeploy.sh
