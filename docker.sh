@@ -3,18 +3,18 @@ set -e
 
 export PROJECT_DIR=${TRAVIS_BUILD_DIR:=$PWD};
 
-curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/build-container.sh -o build-container.sh
+curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/build-container.sh -o build-container.sh
 chmod 700 ./build-container.sh
 ./build-container.sh
 
-curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/start-container.sh -o start-container.sh
+curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/start-container.sh -o start-container.sh
 chmod 700 ./start-container.sh
 ./start-container.sh
 
-curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/push-changes.sh -o push-changes.sh
+curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/push-changes.sh -o push-changes.sh
 chmod 700 ./push-changes.sh
 ./push-changes.sh
 
-# curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/autodeploy.sh -o autodeploy.sh
+# curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/autodeploy.sh -o autodeploy.sh
 # chmod 700 ./autodeploy.sh
 # ./autodeploy.sh
