@@ -18,9 +18,9 @@ if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
         echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:develop\""
         echo "docker push \"${DOCKER_NAMESPACE}/${app}:develop\""
         echo "docker rmi \"${DOCKER_NAMESPACE}/${app}:develop\""
-        docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:develop"
-        docker push "${DOCKER_NAMESPACE}/${app}:develop"
-        docker rmi "${DOCKER_NAMESPACE}/${app}:develop"
+        sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:develop"
+        sudo docker push "${DOCKER_NAMESPACE}/${app}:develop"
+        sudo docker rmi "${DOCKER_NAMESPACE}/${app}:develop"
     done
     else
       echo "not a develop branch"
