@@ -28,7 +28,7 @@ if [ -z "$CHANGE_ID" ]; then
             deployment=$(echo ${APPS} | jq -r ".[$i].deployment");
             label=$(echo ${APPS} | jq -r ".[$i].label");
             echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
-            helm upgrade -f $chart/values-dev.yaml $chart $chart
+            sudo helm upgrade -f $chart/values-dev.yaml $chart $chart
 
             if [ "$label" != "null" ]; then 
                 echo "kubectl delete pod -l app=$label -n $namespace"
