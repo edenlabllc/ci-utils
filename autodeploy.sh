@@ -33,7 +33,7 @@ if [ -z "$CHANGE_ID" ]; then
             if [ "$label" != "null" ]; then 
                 echo "kubectl delete pod -l app=$label -n $namespace"
                 kubectl delete pod -l app=$label -n $namespace
-                $TRAVIS_BUILD_DIR/wait-for-deployment.sh $deployment $namespace 180
+                ./wait-for-deployment.sh $deployment $namespace 180
                     if [ "$?" -eq 0 ]; then
                         kubectl get pod -l app=$label -n $namespace
                     else
