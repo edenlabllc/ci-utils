@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+rm -rf ehealth.charts || true
 if [ -z "$CHANGE_ID" ]; then
     if [ "$GIT_BRANCH" == "develop" ]; then
         curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/wait-for-deployment.sh -o wait-for-deployment.sh
