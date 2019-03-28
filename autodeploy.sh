@@ -1,9 +1,9 @@
 #!/bin/bash
-
+set -e
 if [ -z "$CHANGE_ID" ]; then
     if [ "$GIT_BRANCH" == "develop" ]; then
-        curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/wait-for-deployment.sh -o wait-for-deployment.sh
-        chmod 700 ./wait-for-deployment.sh
+        curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/wait-for-deployment.sh -o wait-for-deployment.sh
+        chmod +x ./wait-for-deployment.sh
 
         # # install kubectl
         # curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -33,7 +33,7 @@ if [ -z "$CHANGE_ID" ]; then
             if [ "$label" != "null" ]; then 
                 echo "kubectl delete pod -l app=$label -n $namespace"
                 kubectl delete pod -l app=$label -n $namespace
-                ./wait-for-deployment.sh $deployment $namespace 180
+                ../wait-for-deployment.sh $deployment $namespace 180
                     if [ "$?" -eq 0 ]; then
                         kubectl get pod -l app=$label -n $namespace
                     else
