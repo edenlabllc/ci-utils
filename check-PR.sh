@@ -1,7 +1,7 @@
 #!/bin/bash
           env;
               if [[ $BRANCH_NAME = te* ]] ; then
-                    if curl https://api.github.com/repos/edenlabllc/$REPOSITORY_NAME/pulls/$CHANGE_ID 2>/dev/null | json -a body | grep -Eq '#[0-9]{1,}' ; then
+                    if curl https://api.github.com/repos/edenlabllc/$REPOSITORY_NAME/pulls/$CHANGE_ID 2>/dev/null |  jq '.body' | grep -Eq '#[0-9]{1,}' ; then
                         echo "---------Correct PR and meet the requirements-------------"
                         exit 0
                     else
