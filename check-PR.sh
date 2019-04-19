@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ [ $BRANCH_NAME = 'PR'* ]] ; then
+if [[ $BRANCH_NAME == PR* ]] ; then
     if curl https://api.github.com/repos/edenlabllc/$REPOSITORY_NAME/pulls/$CHANGE_ID 2>/dev/null |  jq '.body' |  grep -Eq '#[0-9]{1,}'  ||  curl https://api.github.com/repos/edenlabllc/$REPOSITORY_NAME/pulls/$CHANGE_ID 2>/dev/null |  jq '.body' | grep -Eq 'issues/[0-9]{1,}' ; then
         echo "---------Correct PR that meets the requirements-------------"
         exit 0
