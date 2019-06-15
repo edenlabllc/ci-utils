@@ -21,6 +21,10 @@ if [ -z "$CHANGE_ID" ]; then
         git clone https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.charts.git
         cd ehealth.charts
 
+        chart=$(echo ${APPS} | jq -r '.[0].chart')
+        echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
+        sudo helm upgrade -f $chart/values-dev.yaml $chart $chart
+
         i=0
         APPS_LIST=$(echo ${APPS} | jq -r '.[].chart');
         for chart in ${APPS_LIST}
@@ -28,9 +32,6 @@ if [ -z "$CHANGE_ID" ]; then
             namespace=$(echo ${APPS} | jq -r ".[$i].namespace");
             deployment=$(echo ${APPS} | jq -r ".[$i].deployment");
             label=$(echo ${APPS} | jq -r ".[$i].label");
-            echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
-            sudo helm upgrade -f $chart/values-dev.yaml $chart $chart
-
             if [ "$label" != "null" ]; then 
                 echo "kubectl delete pod -l app=$label -n $namespace"
                 kubectl delete pod -l app=$label -n $namespace
@@ -45,6 +46,5 @@ if [ -z "$CHANGE_ID" ]; then
             i=$i+1
         done
         exit 0;
-
     fi;
 fi;
