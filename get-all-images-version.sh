@@ -5,12 +5,12 @@ UNAME="cube13"
 UPASS="tiwnE9-ciqgez-burrar"
 ORG="edenlabllc"
 REGISTRY_TYPE=""
+REPO=$1
 
 # -------
 
 set -e
 echo
-
 if [[ $REGISTRY_TYPE == "private" ]]; then
     # get token
     echo "Retrieving token ..."
@@ -19,20 +19,21 @@ if [[ $REGISTRY_TYPE == "private" ]]; then
     echo "Retrieving repository list ..."
     REPO_LIST=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${ORG}/?page_size=100 | jq -r '.results|.[]|.name' | sort)
 else
-    REPO_LIST=$(curl -s https://hub.docker.com/v2/repositories/${ORG}/?page_size=100 | jq -r '.results|.[]|.name' |grep report| sort)
+    REPO_LIST=$(curl -s https://hub.docker.com/v2/repositories/${ORG}/?page_size=100 | jq -r '.results|.[]|.name' |grep "$REPO"| sort)
 fi
-    # output images & tags
-    echo
-    echo "Images and tags for organization: ${ORG}"
-    echo
-    for i in ${REPO_LIST}
+
+# output images & tags
+echo
+echo "Images and tags for organization: ${ORG}"
+echo
+for i in ${REPO_LIST}
+do
+    echo "${i}:"
+    # tags
+    IMAGE_TAGS=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${ORG}/${i}/tags/?page_size=100 | jq -r '.results|.[]| "\(.name) \(.last_updated)"'| sort -V)
+    for j in ${IMAGE_TAGS}
     do
-        echo "${i}:"
-        # tags
-        IMAGE_TAGS=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${ORG}/${i}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sort -V)
-        for j in ${IMAGE_TAGS}
-        do
-            echo "  ${j}"
-        done
-        echo
+        echo "  ${j}"
     done
+    echo
+done

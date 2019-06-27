@@ -28,8 +28,9 @@ fi
 echo "[I] $APP:$LAST_IMAGE_TAG"
 echo "- $APP -> '${LAST_IMAGE_TAG}'" >> $LOG_FILE
 
-echo "[D] sed -i.bo '/${ORG}\/${APP}/{n;s/tag.*/tag: \"${LAST_IMAGE_TAG}\"/g;}' ./${HELM_CHART}/${VALUES}.yaml"
+echo "[D] sed -i '/${ORG}\/${APP}/{n;s/tag.*/tag: \"${LAST_IMAGE_TAG}\"/g;}' ./${HELM_CHART}/${VALUES}.yaml"
 sed -i.bak "/${ORG}\/${APP}$/{n;s/tag.*/tag: \"${LAST_IMAGE_TAG}\"/g;}" ./${HELM_CHART}/${VALUES}.yaml
+rm ./${HELM_CHART}/${VALUES}.yaml.bak
 
 #echo "[D] sed -i.bo '/${ORG}\/${APP}/{n;s/tag.*/tag: \"${LAST_IMAGE_TAG}\"/g;}' ./${HELM_CHART}/values-demo.yaml"
 #sed -i.bo "/${ORG}\/${APP}$/{n;s/tag.*/tag: \"${LAST_IMAGE_TAG}\"/g;}" ./${HELM_CHART}/values-demo.yaml

@@ -5,6 +5,7 @@ ORG="edenlabllc"
 UNAME="cube13"
 UPASS=""
 
+
 if [[ -z "$LOG_FILE" ]]; then LOG_FILE="$(date +%Y%m%d).log"; fi
 if [ -f "$LOG_FILE" ]; then echo "[I] $LOG_FILE exist"; touch $LOG_FILE; else echo "[I] $LOG_FILE created"; fi
 
@@ -23,11 +24,13 @@ if [[ $REGISTRY_TYPE == "private" ]]; then
     TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${UNAME}'", "password": "'${UPASS}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
     # get list of repositories
     LAST_IMAGE_TAG=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort | tail -1)
+    LAST_IMAGE_UPDATE=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/${LAST_IMAGE_TAG} | jq -r '.results|.[]|.last_updated')
 else
     LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort | tail -1)
+    LAST_IMAGE_UPDATE=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/${LAST_IMAGE_TAG}/ | jq -r '.last_updated')
 fi
 
-echo "[I] Last version $LAST_IMAGE_TAG"
+echo "[I] Last version $LAST_IMAGE_TAG at $LAST_IMAGE_UPDATE"
 
 LAST_MAJOR=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $1}' )
 LAST_MINOR=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $2}' )
@@ -62,18 +65,20 @@ echo "[I] Clone repo $GIT to $APP"
 git clone $GIT $APP
 cd $APP
 git checkout master
+echo "git log --oneline --since=${LAST_IMAGE_UPDATE}| nl -v0 | sed 's/^ \+/&HEAD~/'"
+git log --oneline --since=${LAST_IMAGE_UPDATE}| nl -v0 | sed 's/^ \+/&HEAD~/'
 cd ..
 echo "[I] Building a Docker container '${APP}':'$VERSION' from path '${APP}'..";
 echo "[D] docker build --tag "${DOCKER_NAMESPACE}/${APP}:${VERSION}" --build-arg APP_NAME=${APP} ./${APP};"
 echo "[I] Start build ${DOCKER_NAMESPACE}/${APP}:${VERSION}" >> $LOG_FILE
 
-docker build --tag "${DOCKER_NAMESPACE}/${APP}:${VERSION}" --build-arg APP_NAME=${APP} ./${APP};
+#docker build --tag "${DOCKER_NAMESPACE}/${APP}:${VERSION}" --build-arg APP_NAME=${APP} ./${APP};
 
 echo "[I] Image ${DOCKER_NAMESPACE}/${APP}:${VERSION} buildet" 
 
 echo "[I] Pushing changes to Docker Hub.."
 echo "docker push \"${DOCKER_NAMESPACE}/${APP}:${VERSION}\""
-docker push "${DOCKER_NAMESPACE}/${APP}:${VERSION}"
+#docker push "${DOCKER_NAMESPACE}/${APP}:${VERSION}"
 date +%H:%M:%S >> $LOG_FILE
 rm -r -f $APP
 
