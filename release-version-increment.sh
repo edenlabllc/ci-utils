@@ -65,8 +65,16 @@ echo "[I] Clone repo $GIT to $APP"
 git clone $GIT $APP
 cd $APP
 git checkout master
+
+# GET last git commits since last image's build date
+# and try analiz it
+# if this string contains FIX  then _patch_ version increment
+# if FEAT then _minor_ version increment
+# if ! then major
+ 
 echo "git log --oneline --since=${LAST_IMAGE_UPDATE}| nl -v0 | sed 's/^ \+/&HEAD~/'"
 git log --oneline --since=${LAST_IMAGE_UPDATE}| nl -v0 | sed 's/^ \+/&HEAD~/'
+
 cd ..
 echo "[I] Building a Docker container '${APP}':'$VERSION' from path '${APP}'..";
 echo "[D] docker build --tag "${DOCKER_NAMESPACE}/${APP}:${VERSION}" --build-arg APP_NAME=${APP} ./${APP};"
@@ -74,7 +82,7 @@ echo "[I] Start build ${DOCKER_NAMESPACE}/${APP}:${VERSION}" >> $LOG_FILE
 
 #docker build --tag "${DOCKER_NAMESPACE}/${APP}:${VERSION}" --build-arg APP_NAME=${APP} ./${APP};
 
-echo "[I] Image ${DOCKER_NAMESPACE}/${APP}:${VERSION} buildet" 
+echo "[I] Image ${DOCKER_NAMESPACE}/${APP}:${VERSION} builded" 
 
 echo "[I] Pushing changes to Docker Hub.."
 echo "docker push \"${DOCKER_NAMESPACE}/${APP}:${VERSION}\""
