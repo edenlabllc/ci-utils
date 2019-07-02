@@ -40,7 +40,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
         LAST_IMAGE_UPDATE=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${app}/tags/${LAST_IMAGE_TAG}/ | jq -r '.last_updated')
         echo "Last builded image from $GIT_BRANCH $DOCKER_NAMESPACE/$app:$LAST_IMAGE_TAG at $LAST_IMAGE_UPDATE"
         echo "Let's see what is happend from last build"
-        #git log --oneline --since=${LAST_IMAGE_UPDATE}| sed 's/^ \+/&HEAD~/'
+        git log --oneline --since=${LAST_IMAGE_UPDATE}| sed 's/^ \+/&HEAD~/'
         echo "------------------------"
         echo ${LAST_IMAGE_UPDATE}
         LAST_MAJOR=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $1}' )
@@ -74,8 +74,8 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
             echo "[I] Pushing changes to Docker Hub.."
             echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
             echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
-            #sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
-            #sudo docker push "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
+            sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
+            sudo docker push "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
         else echo "Nothing todo."
         fi;
     done
