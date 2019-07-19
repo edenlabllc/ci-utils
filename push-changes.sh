@@ -75,7 +75,8 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
             echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
             echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
             sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
-            sudo docker push "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
+            echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
+            #sudo docker push "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
         else echo "Nothing todo."
         fi;
     done
