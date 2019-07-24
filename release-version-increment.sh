@@ -57,12 +57,12 @@ case ${RELEASE_VERSION} in
 esac
 
 VERSION="$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
-VERSION="develop"
+#VERSION="master"
 echo "[I] New version $DOCKER_NAMESPACE/$APP:$VERSION" 
 echo "[I] Clone repo $GIT to $APP"
 git clone $GIT $APP
 cd $APP
-git checkout develop
+git checkout master
 cd ..
 echo "[I] Building a Docker container '${APP}':'$VERSION' from path '${APP}'..";
 echo "[D] docker build --tag "${DOCKER_NAMESPACE}/${APP}:${VERSION}" --build-arg APP_NAME=${APP} ./${APP};"
