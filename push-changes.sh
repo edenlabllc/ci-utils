@@ -36,7 +36,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
     APPS_LIST=$(echo ${APPS} | jq -r '.[].app');
     for app in ${APPS_LIST}
     do
-        LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${app}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort | tail -1)
+        LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${app}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort -V| tail -1)
         LAST_IMAGE_UPDATE=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${app}/tags/${LAST_IMAGE_TAG}/ | jq -r '.last_updated')
         echo "Last builded image from $GIT_BRANCH $DOCKER_NAMESPACE/$app:$LAST_IMAGE_TAG at $LAST_IMAGE_UPDATE"
         echo "Let's see what is happend from last build"
@@ -46,8 +46,10 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
         LAST_MAJOR=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $1}' )
         LAST_MINOR=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $2}' )
         LAST_PATCH=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $3}' )
+
         MINOR=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep feat -c)
         PATCH=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep fix -c)
+        PATCH=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep chore -c)
         MAJOR=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep ! -c)
     
         if [ "${MAJOR}" != "0" ]; then 
@@ -71,12 +73,13 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
         if [ "$version" != "0" ]; then
             NEW_VERSION="$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
             echo "[I] New version $DOCKER_NAMESPACE/$app:$NEW_VERSION" 
+            echo "[I] Now in test stage image will be taget with '-rc' $DOCKER_NAMESPACE/$app:$NEW_VERSION-rc" 
             echo "[I] Pushing changes to Docker Hub.."
-            echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
-            echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
-            sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
-            echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
-            #sudo docker push "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
+            echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION-rc\""
+            echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION-rc\""
+            sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION-rc"
+            echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION-rc\""
+            sudo docker push "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION-rc"
         else echo "Nothing todo."
         fi;
     done
