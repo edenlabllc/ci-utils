@@ -22,9 +22,9 @@ if [[ $REGISTRY_TYPE == "private" ]]; then
     # get token
     TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${UNAME}'", "password": "'${UPASS}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
     # get list of repositories
-    LAST_IMAGE_TAG=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort | tail -1)
+    LAST_IMAGE_TAG=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort -V| tail -1)
 else
-    LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort | tail -1)
+    LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort -V| tail -1)
 fi
 
 echo "[I] Last version $LAST_IMAGE_TAG"
@@ -62,7 +62,10 @@ echo "[I] New version $DOCKER_NAMESPACE/$APP:$VERSION"
 echo "[I] Clone repo $GIT to $APP"
 git clone $GIT $APP
 cd $APP
+
+#git checkout develop
 git checkout master
+
 cd ..
 echo "[I] Building a Docker container '${APP}':'$VERSION' from path '${APP}'..";
 echo "[D] docker build --tag "${DOCKER_NAMESPACE}/${APP}:${VERSION}" --build-arg APP_NAME=${APP} ./${APP};"
@@ -84,9 +87,9 @@ if [[ $REGISTRY_TYPE == "private" ]]; then
     # get token
     TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${UNAME}'", "password": "'${UPASS}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
     # get list of repositories
-    LAST_IMAGE_TAG=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort | tail -1)
+    LAST_IMAGE_TAG=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort -V| tail -1)
 else
-    LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort | tail -1)
+    LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${APP}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort -V| tail -1)
 fi
 
 echo "Last actual image in docker hub $DOCKER_NAMESPACE/$APP:$LAST_IMAGE_TAG" >> $LOG_FILE
