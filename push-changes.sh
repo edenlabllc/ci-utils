@@ -49,7 +49,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
 
         MINOR=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep feat -c)
         PATCH=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep fix -c)
-        PATCH=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep chore -c)
+        CHORE=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep chore -c)
         MAJOR=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep ! -c)
     
         if [ "${MAJOR}" != "0" ]; then 
@@ -63,6 +63,11 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
             NEW_MINOR=$((${LAST_MINOR}+1))   
             NEW_PATCH=0
         elif [ "${PATCH}" != "0" ]; then 
+            echo "PATCH"; version="patch"
+            NEW_MAJOR=${LAST_MAJOR}
+            NEW_MINOR=${LAST_MINOR}   
+            NEW_PATCH=$((${LAST_PATCH}+1))
+        elif [ "${CHORE}" != "0" ]; then 
             echo "PATCH"; version="patch"
             NEW_MAJOR=${LAST_MAJOR}
             NEW_MINOR=${LAST_MINOR}   
