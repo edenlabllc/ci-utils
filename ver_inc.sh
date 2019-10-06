@@ -14,14 +14,14 @@ if [[ $version =~ $regex ]]; then
 fi
 
 # check paramater to see which number to increment
-if [[ "$2" == "feature" ]]; then
-  minor=$(echo $minor + 1 | bc) build=0
-elif [[ "$2" == "bug" ]]; then
-  build=$(echo $build + 1 | bc)
+if [[ "$2" == "patch" ]]; then
+  patch=$(echo $patch + 1 | bc)
+elif [[ "$2" == "minor" ]]; then
+  minor=$(echo $minor + 1 | bc) patch=0
 elif [[ "$2" == "major" ]]; then
   major=$(echo $major + 1 | bc) minor=0 patch=0
 else
-  echo "usage: ./version.sh version_number [major/feature/patch]"
+  echo "usage: ./version.sh version_number [major/minor/patch]"
   exit -1
 fi
 
