@@ -26,4 +26,4 @@ else
 fi
 
 # echo the new version number
-echo "new version: ${major}.${minor}.${patch}"
+echo "${major}.${minor}.${patch}"
