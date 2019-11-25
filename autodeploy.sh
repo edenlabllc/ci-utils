@@ -14,6 +14,9 @@ if [ -z "$CHANGE_ID" ]; then
         # curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
         # chmod 700 get_helm.sh
         # ./get_helm.sh
+        echo "install non v3 kuberntes-helm"
+        sudo snap revert helm;
+        sudo snap refresh helm --channel=2.16/stable --classic;
         # Credentials to GCE
         gcloud auth activate-service-account --key-file=$GCLOUD_KEY
         gcloud container clusters get-credentials dev --zone europe-west1-d --project ehealth-162117
@@ -37,7 +40,7 @@ if [ -z "$CHANGE_ID" ]; then
             namespace=$(echo ${APPS} | jq -r ".[$i].namespace");
             deployment=$(echo ${APPS} | jq -r ".[$i].deployment");
             label=$(echo ${APPS} | jq -r ".[$i].label");
-            if [ "$label" != "null" ]; then 
+            if [ "$label" != "null" ]; then
                 echo "kubectl delete pod -l app=$label -n $namespace"
                 kubectl delete pod -l app=$label -n $namespace
                 ../wait-for-deployment.sh $deployment $namespace 180
@@ -80,7 +83,7 @@ if [ -z "$CHANGE_ID" ]; then
     #         echo "helm upgrade -f $chart/values-demo.yaml $chart $chart"
     #         sudo helm upgrade -f $chart/values-demo.yaml $chart $chart
 
-    #         if [ "$label" != "null" ]; then 
+    #         if [ "$label" != "null" ]; then
     #             echo "kubectl delete pod -l app=$label -n $namespace"
     #             kubectl delete pod -l app=$label -n $namespace
     #             ../wait-for-deployment.sh $deployment $namespace 180
