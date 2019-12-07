@@ -2,6 +2,8 @@
 # This script starts a local Docker container with created image.
 # Use `-i` to start it in interactive mode (foreground console and auto-remove on exit).
 
+export GIT_BRANCH=${GITHUB_REF##*/}
+
 set -e
 
 # Get container host address

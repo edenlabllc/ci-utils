@@ -1,7 +1,4 @@
 #!/bin/bash
-
-export PROJECT_DIR=${WORKSPACE};
-
 # This script builds an image based on a Dockerfile that is located in root of git working tree.
 set -e
 
@@ -12,15 +9,15 @@ for row in $(echo "${APPS}" | jq -c '.[]'); do
     DOCKERFILE=$(echo "${row}" | jq -r 'if .dockerfile then .dockerfile else "Dockerfile" end')
 
     echo "[I] Building a Docker container for '$APP_NAME' application";
-    echo "docker build --tag \"${DOCKER_NAMESPACE}/$APP_NAME:$GIT_COMMIT\""
-    echo "    --file \"${PROJECT_DIR}/${DOCKERFILE}\""
-    echo "    --build-arg APP_NAME=$APP_NAME"
-    echo "    \"$PROJECT_DIR\""
-    
-     sudo docker build --tag "${DOCKER_NAMESPACE}/$APP_NAME:$GIT_COMMIT" \
-            --file "${PROJECT_DIR}/${DOCKERFILE}" \
-            --build-arg APP_NAME=$APP_NAME \
-            "$PROJECT_DIR";
+    echo "docker build --tag \"${DOCKER_NAMESPACE}/$APP_NAME:$GITHUB_SHA\""
+    echo "    --file \"${GITHUB_WORKSPACE}/${DOCKERFILE}\""
+    echo "    --build-arg APP_NAME=$APP_NAME $EXTRA_ARG"
+    echo "    \"$GITHUB_WORKSPACE\""
+
+     sudo docker build --tag "${DOCKER_NAMESPACE}/$APP_NAME:$GITHUB_SHA" \
+            --file "${GITHUB_WORKSPACE}/${DOCKERFILE}" \
+            --build-arg APP_NAME=$APP_NAME $EXTRA_ARG \
+            "$GITHUB_WORKSPACE";
 
     echo
 done
