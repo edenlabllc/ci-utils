@@ -16,7 +16,7 @@ for row in $(echo "${APPS}" | jq -c '.[]'); do
 
      sudo docker build --tag "${DOCKER_NAMESPACE}/$APP_NAME:$GITHUB_SHA" \
             --file "${GITHUB_WORKSPACE}/${DOCKERFILE}" \
-            --build-arg APP_NAME=$APP_NAME $EXTRA_ARG \
+            --build-arg APP_NAME=$APP_NAME --build-arg SSH_PRI="$SSH_PRIVATE_KEY" --build-arg SSH_PUB="$SSH_PUB_KEY" \
             "$GITHUB_WORKSPACE";
 
     echo
