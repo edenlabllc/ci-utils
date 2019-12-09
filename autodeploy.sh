@@ -15,7 +15,7 @@ if [ "$GIT_BRANCH" == "master" ]; then
     chmod 700 get_helm.sh
     ./get_helm.sh
     # Credentials to GCE
-    gcloud auth activate-service-account --key-file="$GCLOUD_KEY"
+    # gcloud auth activate-service-account --key-file="$GCLOUD_KEY"
     gcloud container clusters get-credentials dev --zone europe-west1-d --project ehealth-162117
     #get helm charts
     git clone https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.charts.git
