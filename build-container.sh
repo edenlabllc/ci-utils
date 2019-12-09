@@ -1,5 +1,7 @@
 #!/bin/bash
 # This script builds an image based on a Dockerfile that is located in root of git working tree.
+export GIT_BRANCH=${GITHUB_REF##*/}
+
 set -e
 
 echo "Current branch: ${GIT_BRANCH}";
