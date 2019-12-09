@@ -3,7 +3,7 @@
 #set -x
 export GIT_BRANCH=${GITHUB_REF##*/}
 
-if [[  $"{GIT_BRANCH}" == "fix-deploy" ]]; then
+if [[  $"{GIT_BRANCH}" == "master" ]]; then
     echo "Logging in into Docker Hub";
     echo ${DOCKER_PASSWORD} | sudo docker login docker.pkg.github.com --username ${DOCKER_USERNAME} --password-stdin
     if [ ! $DOCKER_USERNAME ]; then
