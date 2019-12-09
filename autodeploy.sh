@@ -18,8 +18,7 @@ if [ "$GIT_BRANCH" == "fix-deploy" ]; then
     # gcloud auth activate-service-account --key-file="$GCLOUD_KEY"
     gcloud container clusters get-credentials dev --zone europe-west1-d --project ehealth-162117
     #get helm charts
-    # git clone git@github.com:edenlabllc/ehealth.charts.git
-    ls -la
+    git clone git@github.com:edenlabllc/ehealth.charts.git
     cd ehealth.charts
 
     chart=$(echo ${APPS} | jq -r '.[0].chart')
