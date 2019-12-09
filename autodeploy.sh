@@ -2,7 +2,7 @@
 export GIT_BRANCH=${GITHUB_REF##*/}
 set -e
 rm -rf ehealth.charts || true
-if [ "$GIT_BRANCH" == "master" ]; then
+if [ "$GIT_BRANCH" == "fix-deploy" ]; then
     curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_github_actions/wait-for-deployment.sh -o wait-for-deployment.sh
     chmod +x ./wait-for-deployment.sh
 
