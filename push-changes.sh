@@ -88,7 +88,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
             echo "[I] ---------- Bump version in charts ----------"
             git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.charts.git
             cd ehealth.charts
-            chart=$(echo ${APPS} | jq -r '.[0].chart')
+            APPS_LIST=$(echo ${APPS} | jq -r '.[0].chart')
             for chart in ${APPS_LIST}
             do
                 if [ "$chart" == "abac-api" ]; then
