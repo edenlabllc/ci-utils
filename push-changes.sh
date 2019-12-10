@@ -260,7 +260,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "uaddresses_api" ]; then
                         sed -i'' -e "23,29s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master
-                        cd $WORKSPACE && git checkout -b release_$NEW_VERSION && git push --set-upstream origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/uaddresses.api.git && cd uaddresses.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "verification" ]; then
                     if [ "$APPS_LIST" == "otp_verification_api" ]; then
