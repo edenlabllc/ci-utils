@@ -83,8 +83,8 @@ if [ -z "$CHANGE_ID" ]; then
         cd ehealth.charts
 
         chart=$(echo ${APPS} | jq -r '.[0].chart')
-        echo "helm upgrade -f $chart/values-dev.yaml $chart $chart"
-        sudo helm upgrade -f $chart/values-dev.yaml $chart $chart
+        echo "helm upgrade -f $chart/values-demo.yaml $chart $chart"
+        sudo helm upgrade -f $chart/values-demo.yaml $chart $chart
 
         if [ "$?" -eq 1 ]; then
             echo "Upgrade faild try to use --debug flag and do it manual or you can use --force flag for reinstaling deployments with new list of envs"
