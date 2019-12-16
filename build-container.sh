@@ -11,12 +11,12 @@ for row in $(echo "${APPS}" | jq -c '.[]'); do
     DOCKERFILE=$(echo "${row}" | jq -r 'if .dockerfile then .dockerfile else "Dockerfile" end')
 
     echo "[I] Building a Docker container for '$APP_NAME' application";
-    echo "DOCKER_BUILDKIT=1 docker build --ssh default --tag \"${DOCKER_NAMESPACE}/$APP_NAME:$GITHUB_SHA\""
+    echo "docker build --tag \"${DOCKER_NAMESPACE}/$APP_NAME:$GITHUB_SHA\""
     echo "    --file \"${GITHUB_WORKSPACE}/${DOCKERFILE}\""
     echo "    --build-arg APP_NAME=$APP_NAME"
     echo "    \"$GITHUB_WORKSPACE\""
 
-     DOCKER_BUILDKIT=1 sudo docker build --ssh default --tag "${DOCKER_NAMESPACE}/$APP_NAME:$GITHUB_SHA" \
+    sudo docker build --tag "${DOCKER_NAMESPACE}/$APP_NAME:$GITHUB_SHA" \
             --file "${GITHUB_WORKSPACE}/${DOCKERFILE}" \
             --build-arg APP_NAME=$APP_NAME \
             "$GITHUB_WORKSPACE";
