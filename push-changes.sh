@@ -174,7 +174,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     fi
                 elif [ "$chart" == "man" ]; then
                     if [ "$APPS_LIST" == "man_api" ]; then
-                        sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+                        sed -i'' -e "14,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
                         cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/man.api.git && cd man.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
