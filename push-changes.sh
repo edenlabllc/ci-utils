@@ -23,8 +23,8 @@ if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
         sudo docker rmi "${DOCKER_NAMESPACE}/${app}:develop"
     done
 
-elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
-    echo "This is master. Hello Master!"
+elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "hpi_release" ]]; then
+    echo "This is hpi_release. Hello hpi_release!"
     echo "Logging in into Docker Hub";
     echo ${DOCKER_PASSWORD} | sudo docker login -u ${DOCKER_USERNAME} --password-stdin
 
@@ -95,7 +95,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "abac_api" ]; then
                         sed -i'' -e "1,4s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.abac.api.git && cd ehealth.abac.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.abac.api.git && cd ehealth.abac.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "abac_log_consumer" ]; then
                         sed -i'' -e "5,9s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -104,19 +104,19 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "ael_api" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ael.api.git && cd ael.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ael.api.git && cd ael.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "blackwater" ]; then
                     if [ "$APPS_LIST" == "blackwater_api" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/blackwater.git && cd blackwater && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/blackwater.git && cd blackwater && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "ds.api" ]; then
                     if [ "$APPS_LIST" == "ds_api" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ds.api.git && cd ds.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ds.api.git && cd ds.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "synchronizer_crl" ]; then
                         sed -i'' -e "12,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -128,13 +128,13 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "edr_api" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/edr_api.git && cd edr_api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/edr_api.git && cd edr_api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "em" ]; then
                     if [ "$APPS_LIST" == "event_manager" ]; then
                         sed -i'' -e "1,4s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/event_manager.api.git && cd event_manager.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/event_manager.api.git && cd event_manager.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "event_manager_consumer" ]; then
                         sed -i'' -e "5,8s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -146,7 +146,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "ehealth" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.api.git && cd ehealth.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.api.git && cd ehealth.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "casher" ]; then
                         sed -i'' -e "18,23s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -164,25 +164,25 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "jabba_rpc" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/jabba.git && cd jabba && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/jabba.git && cd jabba && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "kafka-consumer" ]; then
                     if [ "$APPS_LIST" == "ehealth_kafka_consumer" ]; then
                         sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.kafka_consumer.git && cd ehealth.kafka_consumer && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.kafka_consumer.git && cd ehealth.kafka_consumer && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "man" ]; then
                     if [ "$APPS_LIST" == "man_api" ]; then
                         sed -i'' -e "14,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/man.api.git && cd man.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/man.api.git && cd man.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "medical-events-api" ]; then
                     if [ "$APPS_LIST" == "medical_events_api" ]; then
                         sed -i'' -e "5,10s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/medical_events.git && cd medical_events && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/medical_events.git && cd medical_events && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "event_consumer" ]; then
                         sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -200,7 +200,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "mithril_api" ]; then
                         sed -i'' -e "35,39s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/mithril.api.git && cd mithril.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/mithril.api.git && cd mithril.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "mithril_scheduler" ]; then
                         sed -i'' -e "40,44s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -209,7 +209,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "mpi" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/mpi.api.git && cd mpi.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/mpi.api.git && cd mpi.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "manual_merger" ]; then
                         sed -i'' -e "27,32s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -230,7 +230,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "ops" ]; then
                         sed -i'' -e "1,6s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ops.api.git && cd ops.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ops.api.git && cd ops.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "ops_scheduler" ]; then
                         sed -i'' -e "7,13s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -242,7 +242,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "report_api" ]; then
                         sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/report.api.git && cd report.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/report.api.git && cd report.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "capitation" ]; then
                         sed -i'' -e "6,11s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
@@ -254,19 +254,19 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     if [ "$APPS_LIST" == "rpc_health_check" ]; then
                         sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/rpc_health_check.git && cd rpc_health_check && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/rpc_health_check.git && cd rpc_health_check && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "uaddresses" ]; then
                     if [ "$APPS_LIST" == "uaddresses_api" ]; then
                         sed -i'' -e "23,29s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/uaddresses.api.git && cd uaddresses.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/uaddresses.api.git && cd uaddresses.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     fi
                 elif [ "$chart" == "verification" ]; then
                     if [ "$APPS_LIST" == "otp_verification_api" ]; then
                         sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/otp_verification.api.git && cd otp_verification.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+                        cd $WORKSPACE && git clone -b hpi_release --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/otp_verification.api.git && cd otp_verification.api && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
                     elif [ "$APPS_LIST" == "otp_verification_scheduler" ]; then
                         sed -i'' -e "8,12s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
