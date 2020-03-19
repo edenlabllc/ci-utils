@@ -57,7 +57,7 @@ if [ -z "$CHANGE_ID" ]; then
             i=$i+1
         done
         exit 0;
-    elif [ "$GIT_BRANCH" == "master" ]; then
+    elif [ "$GIT_BRANCH" == "hpi_release" ]; then
         curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_jenkins_gce/wait-for-deployment.sh -o wait-for-deployment.sh
         chmod +x ./wait-for-deployment.sh
 
