@@ -195,6 +195,9 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
                     elif [ "$APPS_LIST" == "medical_events_scheduler" ]; then
                         sed -i'' -e "25,30s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
                         git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+                    elif [ "$APPS_LIST" == "replication_consumer" ]; then
+                        sed -i'' -e "21,24s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
                     fi
                 elif [ "$chart" == "mithril" ]; then
                     if [ "$APPS_LIST" == "mithril_api" ]; then
