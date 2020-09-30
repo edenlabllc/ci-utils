@@ -26,7 +26,7 @@ if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
 elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
     echo "This is master. Hello master!"
     echo "Logging in into Docker Hub";
-    echo ${DOCKER_PASSWORD} | sudo docker login -u ${DOCKER_USERNAME} --password-stdin
+    echo ${DOCKER_PASSWORD} | sudo docker login -u ${DOCKER_USERNAME} --password-stdin ${DOCKER_HOSTNAME}
 
     if [ ! $DOCKER_USERNAME ]; then
         echo "[E] You need to specify Docker Hub account"
