@@ -2,7 +2,7 @@
 
 #set -x
 
-if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
+if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop_temp" ]]; then
     echo "Logging in into Docker Hub";
     echo ${DOCKER_PASSWORD} | sudo docker login -u ${DOCKER_USERNAME} --password-stdin ${DOCKER_HOSTNAME}
 
