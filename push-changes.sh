@@ -50,10 +50,10 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
         LAST_MINOR=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $2}' )
         LAST_PATCH=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $3}' )
 
-        MINOR=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep feat -c)
-        PATCH=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep fix -c)
-        CHORE=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep chore -c)
-        MAJOR=$(git log --oneline --since=${LAST_IMAGE_UPDATE} | sed 's/^ \+/&HEAD~/' | grep ! -c)
+        MINOR=$(git log --oneline --since="${LAST_IMAGE_UPDATE}" | sed 's/^ \+/&HEAD~/' | grep feat -c)
+        PATCH=$(git log --oneline --since="${LAST_IMAGE_UPDATE}" | sed 's/^ \+/&HEAD~/' | grep fix -c)
+        CHORE=$(git log --oneline --since="${LAST_IMAGE_UPDATE}" | sed 's/^ \+/&HEAD~/' | grep chore -c)
+        MAJOR=$(git log --oneline --since="${LAST_IMAGE_UPDATE}" | sed 's/^ \+/&HEAD~/' | grep ! -c)
 
         if [ "${MAJOR}" != "0" ]; then
             echo "MAJOR"; version="major"
