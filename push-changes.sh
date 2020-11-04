@@ -43,7 +43,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
         LAST_IMAGE_UPDATE=$(gcloud container images list-tags eu.gcr.io/ehealth-162117/${app} --filter="tags ~ \d+\.\d+\.\d+ AND -tags ~ [a-z]" --page-size=1 --format=json | jq -r '.[].timestamp.datetime')
         echo "Last builded image from $GIT_BRANCH $DOCKER_NAMESPACE/$app:$LAST_IMAGE_TAG at $LAST_IMAGE_UPDATE"
         echo "Let's see what is happend from last build"
-        git log --oneline --since=${LAST_IMAGE_UPDATE}| sed 's/^ \+/&HEAD~/'
+        git log --oneline --since="${LAST_IMAGE_UPDATE}" | sed 's/^ \+/&HEAD~/'
         echo "------------------------"
         echo ${LAST_IMAGE_UPDATE}
         LAST_MAJOR=$(echo ${LAST_IMAGE_TAG} | awk -F. '{print $1}' )
