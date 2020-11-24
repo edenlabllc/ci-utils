@@ -38,9 +38,9 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
     do
         gcloud auth activate-service-account --key-file=$GCLOUD_KEY
         # LAST_IMAGE_TAG=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${app}/tags/?page_size=100 | jq -r '.results|.[]|.name'| sed '/[[:alpha:]]/d' | sort -V| tail -1)
-        LAST_IMAGE_TAG=$(gcloud container images list-tags eu.gcr.io/ehealth-162117/${app} --filter="tags ~ \d+\.\d+\.\d+ AND -tags ~ [a-z]" --page-size=1 --format=json | jq -r '.[].tags[0]')
+        LAST_IMAGE_TAG=$(gcloud container images list-tags eu.gcr.io/ehealth-162117/${app} --filter="tags ~ \d+\.\d+\.\d+ AND -tags ~ [a-z]" --page-size=1 --format=json | jq -r '.[].tags[0]' | head -n1)
         # LAST_IMAGE_UPDATE=$(curl -s https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/${app}/tags/${LAST_IMAGE_TAG}/ | jq -r '.last_updated')
-        LAST_IMAGE_UPDATE=$(gcloud container images list-tags eu.gcr.io/ehealth-162117/${app} --filter="tags ~ \d+\.\d+\.\d+ AND -tags ~ [a-z]" --page-size=1 --format=json | jq -r '.[].timestamp.datetime')
+        LAST_IMAGE_UPDATE=$(gcloud container images list-tags eu.gcr.io/ehealth-162117/${app} --filter="tags ~ \d+\.\d+\.\d+ AND -tags ~ [a-z]" --page-size=1 --format=json | jq -r '.[].timestamp.datetime' | head -n1)
         echo "Last builded image from $GIT_BRANCH $DOCKER_NAMESPACE/$app:$LAST_IMAGE_TAG at $LAST_IMAGE_UPDATE"
         echo "Let's see what is happend from last build"
         git log --oneline --since="${LAST_IMAGE_UPDATE}" | sed 's/^ \+/&HEAD~/'
