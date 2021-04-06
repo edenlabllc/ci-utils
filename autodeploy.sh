@@ -14,12 +14,12 @@ if [ -z "$CHANGE_ID" ]; then
         # curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
         # chmod 700 get_helm.sh
         # ./get_helm.sh
-        echo "install non v3 kuberntes-helm"
-        until sudo snap revert helm;
-        do
-            sleep 2;
-        done
-        sudo snap refresh helm --channel=2.16/stable --classic;
+        # echo "install non v3 kuberntes-helm"
+        # until sudo snap revert helm;
+        # do
+        #     sleep 2;
+        # done
+        # sudo snap refresh helm --channel=2.16/stable --classic;
         # Credentials to GCE
         gcloud auth activate-service-account --key-file=$GCLOUD_KEY
         gcloud container clusters get-credentials dev --zone europe-west1-d --project ehealth-162117
@@ -69,12 +69,12 @@ if [ -z "$CHANGE_ID" ]; then
         # curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
         # chmod 700 get_helm.sh
         # ./get_helm.sh
-        echo "install non v3 kuberntes-helm"
-        until sudo snap revert helm;
-        do
-            sleep 2;
-        done
-        sudo snap refresh helm --channel=2.16/stable --classic;
+        # echo "install non v3 kuberntes-helm"
+        # until sudo snap revert helm;
+        # do
+        #     sleep 2;
+        # done
+        # sudo snap refresh helm --channel=2.16/stable --classic;
         # Credentials to GCE
         gcloud auth activate-service-account --key-file=$GCLOUD_KEY
         gcloud container clusters get-credentials demo --zone europe-west1-d --project ehealth-162117
