@@ -85,8 +85,8 @@ if [ -z "$CHANGE_ID" ]; then
 
         chart=$(echo ${APPS} | jq -r '.[0].chart')
         namespace=$(echo ${APPS} | jq -r ".[$i].namespace")
-        echo "helm upgrade -f $chart/values-demo.yaml $chart $chart --$namespace"
-        sudo helm upgrade -f $chart/values-demo.yaml $chart $chart --$namespace
+        echo "helm upgrade -f $chart/values-demo.yaml $chart $chart --namespace $namespace"
+        sudo helm upgrade -f $chart/values-demo.yaml $chart $chart --namespace $namespace
 
         if [ "$?" -eq 1 ]; then
             echo "Upgrade faild try to use --debug flag and do it manual or you can use --force flag for reinstaling deployments with new list of envs"
