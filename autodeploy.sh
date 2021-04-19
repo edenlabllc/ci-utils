@@ -28,7 +28,7 @@ if [ -z "$CHANGE_ID" ]; then
         cd ehealth.charts
 
         chart=$(echo ${APPS} | jq -r '.[0].chart')
-        namespace=$(echo ${APPS} | jq -r ".[$i].namespace")
+        namespace=$(echo ${APPS} | jq -r ".[0].namespace")
         echo "helm upgrade -f $chart/values-dev.yaml $chart $chart --namespace $namespace"
         sudo helm upgrade -f $chart/values-dev.yaml $chart $chart --namespace $namespace
         if [ "$?" -eq 1 ]; then
@@ -84,7 +84,7 @@ if [ -z "$CHANGE_ID" ]; then
         cd ehealth.charts
 
         chart=$(echo ${APPS} | jq -r '.[0].chart')
-        namespace=$(echo ${APPS} | jq -r ".[$i].namespace")
+        namespace=$(echo ${APPS} | jq -r ".[0].namespace")
         echo "helm upgrade -f $chart/values-demo.yaml $chart $chart --namespace $namespace"
         sudo helm upgrade -f $chart/values-demo.yaml $chart $chart --namespace $namespace
 
