@@ -16,10 +16,14 @@ if [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "develop" ]]; then
     do
         echo "[I] Pushing changes to Docker Hub.."
         echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:develop\""
+        echo "docker tag \"${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT\" \"${DOCKER_NAMESPACE}/${app}:${GIT_COMMIT:0:7}-develop\""
         echo "docker push \"${DOCKER_NAMESPACE}/${app}:develop\""
+        echo "docker push \"${DOCKER_NAMESPACE}/${app}:${GIT_COMMIT:0:7}-develop\""
         echo "docker rmi \"${DOCKER_NAMESPACE}/${app}:develop\""
         sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:develop"
+        sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:${GIT_COMMIT:0:7}-develop"
         sudo docker push "${DOCKER_NAMESPACE}/${app}:develop"
+        sudo docker push "${DOCKER_NAMESPACE}/${app}:${GIT_COMMIT:0:7}-develop"
         sudo docker rmi "${DOCKER_NAMESPACE}/${app}:develop"
     done
 
