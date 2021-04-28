@@ -92,182 +92,182 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
             sudo docker tag "${DOCKER_NAMESPACE}/${app}:$GIT_COMMIT" "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
             echo "docker push \"${DOCKER_NAMESPACE}/${app}:$NEW_VERSION\""
             sudo docker push "${DOCKER_NAMESPACE}/${app}:$NEW_VERSION"
-            echo "[I] ---------- Bump version in charts ----------"
-            git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.charts.git
-            cd ehealth.charts
-            APPS_LIST_CHART=$(echo ${APPS} | jq -r '.[0].chart')
-            for chart in ${APPS_LIST_CHART}
-            do
-                if [ "$chart" == "abac-api" ]; then
-                    if [ "$APPS_LIST" == "abac_api" ]; then
-                        sed -i'' -e "1,4s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "abac_log_consumer" ]; then
-                        sed -i'' -e "5,9s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "ael" ]; then
-                    if [ "$APPS_LIST" == "ael_api" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "blackwater" ]; then
-                    if [ "$APPS_LIST" == "blackwater_api" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "ds.api" ]; then
-                    if [ "$APPS_LIST" == "ds_api" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "synchronizer_crl" ]; then
-                        sed -i'' -e "12,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "ocsp_service" ]; then
-                        sed -i'' -e "18,23s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "edr-api" ]; then
-                    if [ "$APPS_LIST" == "edr_api" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "em" ]; then
-                    if [ "$APPS_LIST" == "event_manager" ]; then
-                        sed -i'' -e "1,4s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "event_manager_consumer" ]; then
-                        sed -i'' -e "5,8s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "event_manager_scheduler" ]; then
-                        sed -i'' -e "9,12s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "il" ]; then
-                    if [ "$APPS_LIST" == "ehealth" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "casher" ]; then
-                        sed -i'' -e "22,27s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "graphql" ]; then
-                        sed -i'' -e "29,33s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "edr_validations_consumer" ]; then
-                        sed -i'' -e "15,19s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "ehealth_scheduler" ]; then
-                        sed -i'' -e "9,13s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "jabba" ]; then
-                    if [ "$APPS_LIST" == "jabba_rpc" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                        cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/jabba.git && cd jabba && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
-                    fi
-                elif [ "$chart" == "kafka-consumer" ]; then
-                    if [ "$APPS_LIST" == "ehealth_kafka_consumer" ]; then
-                        sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "man" ]; then
-                    if [ "$APPS_LIST" == "man_api" ]; then
-                        sed -i'' -e "14,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "medical-events-api" ]; then
-                    if [ "$APPS_LIST" == "medical_events_api" ]; then
-                        sed -i'' -e "7,11s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "event_consumer" ]; then
-                        sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "person_consumer" ]; then
-                        sed -i'' -e "13,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "number_generator" ]; then
-                        sed -i'' -e "19,23s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "medical_events_scheduler" ]; then
-                        sed -i'' -e "31,35s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "replication_consumer" ]; then
-                        sed -i'' -e "25,29s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "ops_data_consumer" ]; then
-                        sed -i'' -e "37,41s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "mithril" ]; then
-                    if [ "$APPS_LIST" == "mithril_api" ]; then
-                        sed -i'' -e "35,39s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "mithril_scheduler" ]; then
-                        sed -i'' -e "40,44s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "mpi" ]; then
-                    if [ "$APPS_LIST" == "mpi" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "manual_merger" ]; then
-                        sed -i'' -e "27,32s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "mpi_scheduler" ]; then
-                        sed -i'' -e "22,27s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "person_updates_producer" ]; then
-                        sed -i'' -e "7,12s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "person_deactivator" ]; then
-                        sed -i'' -e "17,22s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "deduplication" ]; then
-                        sed -i'' -e "12,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "ops" ]; then
-                    if [ "$APPS_LIST" == "ops" ]; then
-                        sed -i'' -e "1,6s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "ops_scheduler" ]; then
-                        sed -i'' -e "7,13s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "deactivate_declaration_consumer" ]; then
-                        sed -i'' -e "14,18s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "reports" ]; then
-                    if [ "$APPS_LIST" == "report_api" ]; then
-                        sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "capitation" ]; then
-                        sed -i'' -e "6,11s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "report_cache" ]; then
-                        sed -i'' -e "12,16s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "rpc-health-check" ]; then
-                    if [ "$APPS_LIST" == "rpc_health_check" ]; then
-                        sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "uaddresses" ]; then
-                    if [ "$APPS_LIST" == "uaddresses_api" ]; then
-                        sed -i'' -e "23,29s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                elif [ "$chart" == "verification" ]; then
-                    if [ "$APPS_LIST" == "otp_verification_api" ]; then
-                        sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    elif [ "$APPS_LIST" == "otp_verification_scheduler" ]; then
-                        sed -i'' -e "8,12s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
-                        git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
-                    fi
-                fi
+            # echo "[I] ---------- Bump version in charts ----------"
+            # git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/ehealth.charts.git
+            # cd ehealth.charts
+            # APPS_LIST_CHART=$(echo ${APPS} | jq -r '.[0].chart')
+            # for chart in ${APPS_LIST_CHART}
+            # do
+            #     if [ "$chart" == "abac-api" ]; then
+            #         if [ "$APPS_LIST" == "abac_api" ]; then
+            #             sed -i'' -e "1,4s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "abac_log_consumer" ]; then
+            #             sed -i'' -e "5,9s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "ael" ]; then
+            #         if [ "$APPS_LIST" == "ael_api" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "blackwater" ]; then
+            #         if [ "$APPS_LIST" == "blackwater_api" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "ds.api" ]; then
+            #         if [ "$APPS_LIST" == "ds_api" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "synchronizer_crl" ]; then
+            #             sed -i'' -e "12,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "ocsp_service" ]; then
+            #             sed -i'' -e "18,23s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "edr-api" ]; then
+            #         if [ "$APPS_LIST" == "edr_api" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "em" ]; then
+            #         if [ "$APPS_LIST" == "event_manager" ]; then
+            #             sed -i'' -e "1,4s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "event_manager_consumer" ]; then
+            #             sed -i'' -e "5,8s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "event_manager_scheduler" ]; then
+            #             sed -i'' -e "9,12s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "il" ]; then
+            #         if [ "$APPS_LIST" == "ehealth" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "casher" ]; then
+            #             sed -i'' -e "22,27s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "graphql" ]; then
+            #             sed -i'' -e "29,33s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "edr_validations_consumer" ]; then
+            #             sed -i'' -e "15,19s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "ehealth_scheduler" ]; then
+            #             sed -i'' -e "9,13s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "jabba" ]; then
+            #         if [ "$APPS_LIST" == "jabba_rpc" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #             cd $WORKSPACE && git clone -b master --single-branch https://$GITHUB_TOKEN@github.com/edenlabllc/jabba.git && cd jabba && git checkout -b release_$NEW_VERSION && git push origin release_$NEW_VERSION
+            #         fi
+            #     elif [ "$chart" == "kafka-consumer" ]; then
+            #         if [ "$APPS_LIST" == "ehealth_kafka_consumer" ]; then
+            #             sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "man" ]; then
+            #         if [ "$APPS_LIST" == "man_api" ]; then
+            #             sed -i'' -e "14,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "medical-events-api" ]; then
+            #         if [ "$APPS_LIST" == "medical_events_api" ]; then
+            #             sed -i'' -e "7,11s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "event_consumer" ]; then
+            #             sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "person_consumer" ]; then
+            #             sed -i'' -e "13,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "number_generator" ]; then
+            #             sed -i'' -e "19,23s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "medical_events_scheduler" ]; then
+            #             sed -i'' -e "31,35s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "replication_consumer" ]; then
+            #             sed -i'' -e "25,29s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "ops_data_consumer" ]; then
+            #             sed -i'' -e "37,41s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "mithril" ]; then
+            #         if [ "$APPS_LIST" == "mithril_api" ]; then
+            #             sed -i'' -e "35,39s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "mithril_scheduler" ]; then
+            #             sed -i'' -e "40,44s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "mpi" ]; then
+            #         if [ "$APPS_LIST" == "mpi" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "manual_merger" ]; then
+            #             sed -i'' -e "27,32s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "mpi_scheduler" ]; then
+            #             sed -i'' -e "22,27s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "person_updates_producer" ]; then
+            #             sed -i'' -e "7,12s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "person_deactivator" ]; then
+            #             sed -i'' -e "17,22s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "deduplication" ]; then
+            #             sed -i'' -e "12,17s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "ops" ]; then
+            #         if [ "$APPS_LIST" == "ops" ]; then
+            #             sed -i'' -e "1,6s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "ops_scheduler" ]; then
+            #             sed -i'' -e "7,13s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "deactivate_declaration_consumer" ]; then
+            #             sed -i'' -e "14,18s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "reports" ]; then
+            #         if [ "$APPS_LIST" == "report_api" ]; then
+            #             sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "capitation" ]; then
+            #             sed -i'' -e "6,11s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "report_cache" ]; then
+            #             sed -i'' -e "12,16s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "rpc-health-check" ]; then
+            #         if [ "$APPS_LIST" == "rpc_health_check" ]; then
+            #             sed -i'' -e "1,5s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "uaddresses" ]; then
+            #         if [ "$APPS_LIST" == "uaddresses_api" ]; then
+            #             sed -i'' -e "23,29s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     elif [ "$chart" == "verification" ]; then
+            #         if [ "$APPS_LIST" == "otp_verification_api" ]; then
+            #             sed -i'' -e "1,7s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         elif [ "$APPS_LIST" == "otp_verification_scheduler" ]; then
+            #             sed -i'' -e "8,12s/tag:.*/tag: \"$NEW_VERSION\"/" "$chart/values-demo.yaml"
+            #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
+            #         fi
+            #     fi
             done
             exit 0;
         else echo "Nothing todo."
