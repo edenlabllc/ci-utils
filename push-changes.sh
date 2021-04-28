@@ -268,7 +268,7 @@ elif [[  -z "${CHANGE_ID}" && "${GIT_BRANCH}" == "master" ]]; then
             #             git add $chart/values-demo.yaml && git commit -m "bump $chart/$APPS_LIST to $NEW_VERSION" && git push origin master && cd .. && rm -rf ehealth.charts || true
             #         fi
             #     fi
-            done
+            # done
             exit 0;
         else echo "Nothing todo."
         fi;
